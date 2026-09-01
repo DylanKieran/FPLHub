@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet"><style>body{margin:0;background:#F4F5F7;font-family:Inter,system-ui,sans-serif;-webkit-font-smoothing:antialiased;text-wrap:pretty}a{color:#1971C2;text-decoration:none}a:hover{color:#155A9C;text-decoration:underline}*{box-sizing:border-box}::-webkit-scrollbar{width:10px;height:10px}::-webkit-scrollbar-track{background:#EBEDF0}::-webkit-scrollbar-thumb{background:#C4C9D1;border-radius:5px;border:2px solid #EBEDF0}::-webkit-scrollbar-thumb:hover{background:#9BA1AB}@keyframes omPulse{0%,100%{opacity:1}50%{opacity:.45}}@media(prefers-reduced-motion:reduce){*{animation:none!important}}</style></helmet>
+<div style="display:flex;min-height:100vh;background:#F4F5F7;color:#1A1D23">
+
+  <aside style="width:256px;flex:0 0 256px;background:#EBEDF0;display:flex;flex-direction:column;position:sticky;top:0;height:100vh;padding:20px 12px 16px">
+    <div style="display:flex;align-items:center;gap:10px;padding:0 8px 20px">
+      <div style="width:32px;height:32px;border-radius:8px;background:#1A1D23;display:flex;align-items:center;justify-content:center;font:700 15px Inter,sans-serif;color:#fff;letter-spacing:-.03em">F</div>
+      <div style="display:flex;flex-direction:column;gap:1px">
+        <span style="font:600 15px/1 Inter,sans-serif;letter-spacing:-.01em">FPL Hub</span>
+        <span style="font:500 10px/1 Inter,sans-serif;letter-spacing:.09em;color:#9BA1AB;text-transform:uppercase">Analytics</span>
+      </div>
+    </div>
+
+    <nav style="display:flex;flex-direction:column;gap:2px">
+      <button onClick="{{ goDash }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navDash.bg }};color:{{ navDash.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
+        Dashboard
+      </button>
+      <button onClick="{{ goPlayers }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navPlayers.bg }};color:{{ navPlayers.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+        Player Explorer
+      </button>
+      <button onClick="{{ goTeam }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navTeam.bg }};color:{{ navTeam.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 17V7m0 10a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h2a2 2 0 012 2m0 10a2 2 0 002 2h2a2 2 0 002-2M9 7a2 2 0 012-2h2a2 2 0 012 2m0 10V7m0 10a2 2 0 002 2h2a2 2 0 002-2V7a2 2 0 00-2-2h-2a2 2 0 00-2 2"></path></svg>
+        Team Analyser
+      </button>
+      <button onClick="{{ goTransfers }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navTransfers.bg }};color:{{ navTransfers.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg>
+        Transfer Hub
+      </button>
+      <button onClick="{{ goCaptain }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navCaptain.bg }};color:{{ navCaptain.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+        Captain &amp; Chips
+      </button>
+      <button onClick="{{ goSquad }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navSquad.bg }};color:{{ navSquad.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        Squad Builder
+      </button>
+    </nav>
+
+    <div style="height:1px;background:#DDE0E5;margin:14px 12px"></div>
+
+    <nav style="display:flex;flex-direction:column;gap:2px">
+      <button onClick="{{ goDark }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navDark.bg }};color:{{ navDark.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><circle cx="12" cy="12" r="8" stroke-width="1.5"></circle><path d="M12 4a8 8 0 010 16z" fill="currentColor" stroke="none"></path></svg>
+        Dark mode
+      </button>
+      <button onClick="{{ goMobile }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navMobile.bg }};color:{{ navMobile.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><rect x="7" y="3" width="10" height="18" rx="2" stroke-width="1.5"></rect><path d="M11 18.5h2" stroke-width="1.5" stroke-linecap="round"></path></svg>
+        Mobile
+      </button>
+      <button onClick="{{ goStates }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navStates.bg }};color:{{ navStates.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><rect x="3" y="5" width="18" height="5" rx="1.5" stroke-width="1.5"></rect><rect x="3" y="14" width="11" height="5" rx="1.5" stroke-width="1.5" stroke-dasharray="3 2"></rect></svg>
+        Empty &amp; loading
+      </button>
+      <button onClick="{{ goNotes }}" style="display:flex;align-items:center;gap:12px;padding:9px 12px;border:0;border-radius:8px;cursor:pointer;text-align:left;font:500 13.5px Inter,sans-serif;background:{{ navNotes.bg }};color:{{ navNotes.fg }}">
+        <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24" style="flex:none"><rect x="5" y="3" width="14" height="18" rx="2" stroke-width="1.5"></rect><path d="M9 8h6M9 12h6M9 16h3" stroke-width="1.5" stroke-linecap="round"></path></svg>
+        Design notes
+      </button>
+    </nav>
+
+    <div style="flex:1"></div>
+
+    <div style="padding:12px;border-radius:10px;background:#F4F5F7;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;align-items:baseline;justify-content:space-between">
+        <span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">GW24 deadline</span>
+      </div>
+      <span style="font:500 15px 'JetBrains Mono',monospace;color:#1A1D23">3d 14h 22m</span>
+      <div style="height:4px;border-radius:2px;background:#DDE0E5;overflow:hidden"><div style="width:38%;height:100%;background:#1971C2"></div></div>
+      <span style="font:400 11px Inter,sans-serif;color:#9BA1AB">Sat 7 Feb, 11:30</span>
+    </div>
+  </aside>
+
+  <main style="flex:1;min-width:0;display:flex;flex-direction:column">
+    <sc-if value="{{ isDash }}" hint-placeholder-val="{{ true }}">
+    <div data-screen-label="Dashboard">
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8;position:sticky;top:0;z-index:20">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Gameweek 24</h1>
+          <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">Rowan Athletic · ID 4127883</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:#FFFFFF;border:1px solid #E0E3E8;border-radius:10px;min-width:260px">
+            <svg width="16" height="16" fill="none" stroke="#9BA1AB" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1.8" d="M21 21l-5-5m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <span style="font:400 13px Inter,sans-serif;color:#9BA1AB">Search players, teams, fixtures</span>
+          </div>
+          <button style="height:36px;padding:0 14px;border:1px solid #E0E3E8;background:#FFFFFF;border-radius:10px;font:500 13px Inter,sans-serif;color:#1A1D23;cursor:pointer">Switch team</button>
+        </div>
+      </header>
+
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 56px;display:flex;flex-direction:column;gap:24px">
+
+        <section style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+          <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font:500 13px/18px Inter,sans-serif;letter-spacing:.03em;color:#5F6672">Overall rank</span>
+              <svg width="16" height="16" fill="none" stroke="#1B873B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 17L17 7m0 0h-6m6 0v6"></path></svg>
+            </div>
+            <span style="font:500 36px/42px 'JetBrains Mono',monospace;letter-spacing:-.02em">142,308</span>
+            <span style="font:500 13px/18px Inter,sans-serif;color:#1B873B">▲ 18,442 places this GW</span>
+            <span style="font:400 11px/16px Inter,sans-serif;color:#9BA1AB">Updated 2h ago</span>
+          </div>
+          <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font:500 13px/18px Inter,sans-serif;letter-spacing:.03em;color:#5F6672">GW24 points</span>
+              <span style="font:500 11px Inter,sans-serif;color:#5F6672">avg 51</span>
+            </div>
+            <span style="font:500 36px/42px 'JetBrains Mono',monospace;letter-spacing:-.02em">68</span>
+            <span style="font:500 13px/18px Inter,sans-serif;color:#1B873B">+17 vs gameweek average</span>
+            <span style="font:400 11px/16px Inter,sans-serif;color:#9BA1AB">1 transfer · 0 pts hit</span>
+          </div>
+          <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font:500 13px/18px Inter,sans-serif;letter-spacing:.03em;color:#5F6672">Squad value</span>
+              <span style="font:500 11px Inter,sans-serif;color:#5F6672">ITB £0.8m</span>
+            </div>
+            <span style="font:500 36px/42px 'JetBrains Mono',monospace;letter-spacing:-.02em">£102.4m</span>
+            <span style="font:500 13px/18px Inter,sans-serif;color:#1B873B">+£2.4m since GW1</span>
+            <span style="font:400 11px/16px Inter,sans-serif;color:#9BA1AB">2 risers held, 1 faller</span>
+          </div>
+          <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <span style="font:500 13px/18px Inter,sans-serif;letter-spacing:.03em;color:#5F6672">Season total</span>
+              <span style="font:500 11px Inter,sans-serif;color:#5F6672">24 GWs</span>
+            </div>
+            <span style="font:500 36px/42px 'JetBrains Mono',monospace;letter-spacing:-.02em">1,384</span>
+            <span style="font:500 13px/18px Inter,sans-serif;color:#5F6672">57.7 points per gameweek</span>
+            <span style="font:400 11px/16px Inter,sans-serif;color:#9BA1AB">Top 3% of all managers</span>
+          </div>
+        </section>
+
+        <section style="display:grid;grid-template-columns:1.35fr 1fr;gap:24px;align-items:start">
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between">
+              <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Captain shortlist</h2>
+              <span style="font:400 13px Inter,sans-serif;color:#5F6672">Weighted on form, fixture, xG and minutes</span>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:14px;border-left:3px solid #1B873B;padding:22px 24px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8A317"><path d="M5 17h14l1.5-9-5 3L12 5l-3.5 6-5-3z"></path></svg>
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#BF8700;text-transform:uppercase">Captain pick — GW24</span>
+              </div>
+              <div style="display:flex;gap:20px;align-items:flex-start">
+                <div style="width:88px;height:104px;flex:none;border-radius:10px;background:repeating-linear-gradient(135deg,#EBEDF0 0 6px,#F4F5F7 6px 12px);display:flex;align-items:flex-end;justify-content:center;padding:8px">
+                  <span style="font:400 9px 'JetBrains Mono',monospace;color:#9BA1AB;text-align:center">player shot</span>
+                </div>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                  <span style="font:700 28px/34px Inter,sans-serif;letter-spacing:-.02em">{{ cap1.full }}</span>
+                  <span style="font:400 15px/22px Inter,sans-serif;color:#5F6672">{{ cap1.team }} · {{ cap1.pos }} · {{ cap1.price }}</span>
+                  <div style="display:flex;gap:8px;margin-top:8px">
+                    <sc-for list="{{ cap1.fixtures }}" as="f" hint-placeholder-count="3">
+                      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div style="width:52px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 14px 'JetBrains Mono',monospace;background:{{ f.bg }};color:{{ f.fg }}">{{ f.d }}</div>
+                        <span style="font:500 10px Inter,sans-serif;letter-spacing:.03em;color:#5F6672">{{ f.label }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="flex:none;text-align:right;display:flex;flex-direction:column;gap:2px">
+                  <span style="font:500 28px/34px 'JetBrains Mono',monospace;color:#1B873B">{{ cap1.xpts }}</span>
+                  <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">xPts</span>
+                </div>
+              </div>
+              <div style="display:flex;gap:28px;padding-top:14px;border-top:1px solid #E0E3E8">
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Form</span><span style="font:500 15px 'JetBrains Mono',monospace;color:#1B873B">{{ cap1.form }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">xG/90</span><span style="font:500 15px 'JetBrains Mono',monospace">{{ cap1.xg }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">PPG</span><span style="font:500 15px 'JetBrains Mono',monospace">{{ cap1.ppg }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Owned</span><span style="font:500 15px 'JetBrains Mono',monospace">{{ cap1.own }}</span></div>
+              </div>
+              <p style="margin:0;font:400 15px/22px Inter,sans-serif;color:#1A1D23;max-width:56ch">{{ cap1.why }}</p>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden">
+              <sc-for list="{{ capRest }}" as="c" hint-placeholder-count="4">
+                <div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-top:1px solid #EBEDF0">
+                  <span style="width:16px;font:500 13px 'JetBrains Mono',monospace;color:#9BA1AB">{{ c.rank }}</span>
+                  <div style="width:170px;display:flex;flex-direction:column;gap:1px">
+                    <span style="font:600 15px/20px Inter,sans-serif">{{ c.name }}</span>
+                    <span style="font:400 11px/16px Inter,sans-serif;color:#5F6672">{{ c.short }} · {{ c.pos }} · {{ c.price }}</span>
+                  </div>
+                  <div style="flex:1;display:flex;align-items:center;gap:10px;min-width:0">
+                    <div style="flex:1;height:6px;border-radius:3px;background:#EBEDF0;overflow:hidden"><div style="height:100%;border-radius:3px;background:#4C72B0;width:{{ c.score }}%"></div></div>
+                    <span style="width:34px;text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#5F6672">{{ c.xpts }}</span>
+                  </div>
+                  <div style="display:flex;gap:4px;flex:none">
+                    <sc-for list="{{ c.fixtures }}" as="f" hint-placeholder-count="3">
+                      <div style="width:36px;height:28px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:{{ f.bg }};color:{{ f.fg }}">
+                        <span style="font:500 10px/11px 'JetBrains Mono',monospace">{{ f.opp }}</span>
+                        <span style="font:400 8px/9px Inter,sans-serif;opacity:.75">{{ f.ha }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between">
+              <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Price watch</h2>
+              <span style="font:400 13px Inter,sans-serif;color:#5F6672">Tonight, 01:30</span>
+            </div>
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#1B873B"><path d="M12 5l7 9H5z"></path></svg>
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#1B873B;text-transform:uppercase">Likely risers</span>
+              </div>
+              <sc-for list="{{ risers }}" as="p" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:118px;display:flex;flex-direction:column;gap:1px">
+                    <span style="font:600 13px/18px Inter,sans-serif">{{ p.name }}</span>
+                    <span style="font:400 11px/14px Inter,sans-serif;color:#9BA1AB">{{ p.team }} · {{ p.price }}</span>
+                  </div>
+                  <span style="flex:1;font:500 12px 'JetBrains Mono',monospace;color:#1B873B">{{ p.net }}</span>
+                  <div style="width:56px;height:6px;border-radius:3px;background:#EBEDF0;overflow:hidden"><div style="height:100%;border-radius:3px;background:#28A745;width:{{ p.conf }}%"></div></div>
+                  <span style="width:30px;text-align:right;font:500 11px 'JetBrains Mono',monospace;color:#5F6672">{{ p.conf }}%</span>
+                </div>
+              </sc-for>
+              <div style="height:1px;background:#EBEDF0;margin:4px 0"></div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="#CF222E"><path d="M12 19l-7-9h14z"></path></svg>
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#CF222E;text-transform:uppercase">Likely fallers</span>
+              </div>
+              <sc-for list="{{ fallers }}" as="p" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:118px;display:flex;flex-direction:column;gap:1px">
+                    <span style="font:600 13px/18px Inter,sans-serif">{{ p.name }}</span>
+                    <span style="font:400 11px/14px Inter,sans-serif;color:#9BA1AB">{{ p.team }} · {{ p.price }}</span>
+                  </div>
+                  <span style="flex:1;font:500 12px 'JetBrains Mono',monospace;color:#CF222E">{{ p.net }}</span>
+                  <div style="width:56px;height:6px;border-radius:3px;background:#EBEDF0;overflow:hidden"><div style="height:100%;border-radius:3px;background:#DC3545;width:{{ p.conf }}%"></div></div>
+                  <span style="width:30px;text-align:right;font:500 11px 'JetBrains Mono',monospace;color:#5F6672">{{ p.conf }}%</span>
+                </div>
+              </sc-for>
+            </div>
+
+            <div style="background:#FFF0EE;border-radius:10px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start">
+              <svg width="18" height="18" fill="none" stroke="#CF222E" viewBox="0 0 24 24" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="9" stroke-width="1.6"></circle><path d="M12 8v5M12 16h.01" stroke-width="1.8" stroke-linecap="round"></path></svg>
+              <div style="display:flex;flex-direction:column;gap:4px">
+                <span style="font:600 13px/18px Inter,sans-serif;color:#CF222E">2 squad players flagged</span>
+                <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">Rashford — knock, 50% chance. Muñoz — suspended (GW24).</span>
+                <a href="#" onClick="{{ goTeam }}" style="font:500 13px/18px Inter,sans-serif;color:#1971C2">Review squad →</a>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Fixture difficulty — next 6</h2>
+            <div style="display:flex;align-items:center;gap:14px">
+              <span style="font:400 13px Inter,sans-serif;color:#5F6672">Easier</span>
+              <div style="display:flex;gap:3px">
+                <div style="width:22px;height:10px;border-radius:2px;background:#DAFBE1"></div>
+                <div style="width:22px;height:10px;border-radius:2px;background:#C3F7CB"></div>
+                <div style="width:22px;height:10px;border-radius:2px;background:#FFF4CC"></div>
+                <div style="width:22px;height:10px;border-radius:2px;background:#FFCECB"></div>
+                <div style="width:22px;height:10px;border-radius:2px;background:#F8B4B4"></div>
+              </div>
+              <span style="font:400 13px Inter,sans-serif;color:#5F6672">Harder</span>
+            </div>
+          </div>
+          <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden">
+            <div style="display:grid;grid-template-columns:88px repeat(6,1fr) 72px;gap:0;background:#EBEDF0;padding:10px 20px">
+              <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Team</span>
+              <sc-for list="{{ gwHeader }}" as="g" hint-placeholder-count="6">
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:center">{{ g }}</span>
+              </sc-for>
+              <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">Avg</span>
+            </div>
+            <sc-for list="{{ ticker }}" as="r" hint-placeholder-count="20">
+              <div style="display:grid;grid-template-columns:88px repeat(6,1fr) 72px;align-items:center;gap:0;padding:5px 20px;border-top:1px solid #F4F5F7">
+                <div style="display:flex;align-items:center;gap:8px">
+                  <div style="width:18px;height:18px;border-radius:4px;background:#EBEDF0"></div>
+                  <span style="font:600 13px Inter,sans-serif">{{ r.team }}</span>
+                </div>
+                <sc-for list="{{ r.cells }}" as="f" hint-placeholder-count="6">
+                  <div style="margin:0 auto;width:62px;height:34px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:{{ f.bg }};color:{{ f.fg }}">
+                    <span style="font:500 11px/12px 'JetBrains Mono',monospace">{{ f.opp }}</span>
+                    <span style="font:400 9px/10px Inter,sans-serif;opacity:.75">{{ f.ha }} · {{ f.d }}</span>
+                  </div>
+                </sc-for>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:{{ r.avgColor }}">{{ r.avg }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </div>
+    </sc-if>
+    <sc-if value="{{ isPlayers }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Player Explorer">
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8;position:sticky;top:0;z-index:20">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Player Explorer</h1>
+          <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">642 players · 12 shown</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <button style="height:36px;padding:0 14px;border:1px solid #E0E3E8;background:#FFFFFF;border-radius:10px;font:500 13px Inter,sans-serif;cursor:pointer">Compare (2)</button>
+          <button style="height:36px;padding:0 14px;border:0;background:#1A1D23;color:#fff;border-radius:10px;font:500 13px Inter,sans-serif;cursor:pointer">Export CSV</button>
+        </div>
+      </header>
+
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 56px;display:flex;flex-direction:column;gap:20px">
+        <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:16px 20px;display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Position</span>
+            <div style="display:flex;gap:6px">
+              <button style="height:30px;padding:0 14px;border:0;border-radius:6px;background:#D0EBFF;color:#1971C2;font:500 13px Inter,sans-serif;cursor:pointer">All</button>
+              <button style="height:30px;padding:0 14px;border:1px solid #E0E3E8;border-radius:6px;background:#FFFFFF;color:#5F6672;font:500 13px Inter,sans-serif;cursor:pointer">GKP</button>
+              <button style="height:30px;padding:0 14px;border:1px solid #E0E3E8;border-radius:6px;background:#FFFFFF;color:#5F6672;font:500 13px Inter,sans-serif;cursor:pointer">DEF</button>
+              <button style="height:30px;padding:0 14px;border:1px solid #E0E3E8;border-radius:6px;background:#FFFFFF;color:#5F6672;font:500 13px Inter,sans-serif;cursor:pointer">MID</button>
+              <button style="height:30px;padding:0 14px;border:1px solid #E0E3E8;border-radius:6px;background:#FFFFFF;color:#5F6672;font:500 13px Inter,sans-serif;cursor:pointer">FWD</button>
+            </div>
+            <div style="width:1px;height:24px;background:#E0E3E8"></div>
+            <div style="display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:1px solid #E0E3E8;border-radius:8px;min-width:220px">
+              <svg width="15" height="15" fill="none" stroke="#9BA1AB" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1.8" d="M21 21l-5-5m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+              <span style="font:400 13px Inter,sans-serif;color:#9BA1AB">Search by name</span>
+            </div>
+          </div>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+            <div style="display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:1px solid #E0E3E8;border-radius:8px"><span style="font:400 13px Inter,sans-serif;color:#1A1D23">All teams</span><svg width="12" height="12" fill="none" stroke="#5F6672" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2.2" d="M6 9l6 6 6-6"></path></svg></div>
+            <div style="display:flex;align-items:center;gap:8px;height:32px;padding:0 12px;border:1px solid #E0E3E8;border-radius:8px"><span style="font:400 13px Inter,sans-serif;color:#1A1D23">Sort: Total points</span><svg width="12" height="12" fill="none" stroke="#5F6672" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2.2" d="M6 9l6 6 6-6"></path></svg></div>
+            <div style="display:flex;align-items:center;gap:10px;height:32px;padding:0 12px;border:1px solid #E0E3E8;border-radius:8px">
+              <span style="font:400 13px Inter,sans-serif;color:#5F6672">Price</span>
+              <span style="font:500 13px 'JetBrains Mono',monospace">£4.0 – £15.0m</span>
+              <div style="width:88px;height:4px;border-radius:2px;background:#EBEDF0;position:relative"><div style="position:absolute;left:0;right:0;height:100%;border-radius:2px;background:#2196F3"></div></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;height:32px;padding:0 12px;border-radius:8px;background:#EFF8F1"><span style="font:500 13px Inter,sans-serif;color:#1B873B">Available only</span><svg width="13" height="13" fill="none" stroke="#1B873B" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.4" d="M5 13l4 4L19 7"></path></svg></div>
+          </div>
+        </div>
+
+        <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden">
+          <div style="display:grid;grid-template-columns:56px 168px 76px 62px 56px 62px 62px 62px 66px 62px 1fr;align-items:center;gap:0;background:#EBEDF0;padding:0 20px;height:40px">
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Pos</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Player</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#1971C2;text-transform:uppercase;text-align:right">Pts ▼</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">£</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">Form</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">PPG</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">xG</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">xA</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">ICT</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">Own</span>
+            <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase;text-align:right">Next 5</span>
+          </div>
+
+          <sc-for list="{{ players }}" as="p" hint-placeholder-count="12">
+            <div>
+              <div style="display:grid;grid-template-columns:56px 168px 76px 62px 56px 62px 62px 62px 66px 62px 1fr;align-items:center;gap:0;padding:0 20px;height:48px;border-top:1px solid #F1F2F4;background:{{ p.bg }}">
+                <span style="justify-self:start;padding:2px 7px;border-radius:6px;font:500 10px Inter,sans-serif;letter-spacing:.05em;background:{{ p.posBg }};color:{{ p.posFg }}">{{ p.pos }}</span>
+                <div style="display:flex;align-items:center;gap:8px;min-width:0">
+                  <span style="width:7px;height:7px;border-radius:50%;flex:none;background:{{ p.dot }}" title="{{ p.status }}"></span>
+                  <span style="font:600 15px Inter,sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ p.name }}</span>
+                  <span style="font:400 12px Inter,sans-serif;color:#9BA1AB">{{ p.team }}</span>
+                </div>
+                <span style="text-align:right;font:700 15px 'JetBrains Mono',monospace">{{ p.pts }}</span>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#5F6672">{{ p.price }}</span>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:{{ p.formColor }}">{{ p.form }}</span>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#5F6672">{{ p.ppg }}</span>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#5F6672">{{ p.xg }}</span>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#5F6672">{{ p.xa }}</span>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#5F6672">{{ p.ict }}</span>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#5F6672">{{ p.sel }}</span>
+                <div style="display:flex;gap:4px;justify-content:flex-end">
+                  <sc-for list="{{ p.next }}" as="f" hint-placeholder-count="5">
+                    <div style="width:30px;height:26px;border-radius:5px;display:flex;align-items:center;justify-content:center;font:500 11px 'JetBrains Mono',monospace;background:{{ f.bg }};color:{{ f.fg }}" title="{{ f.label }}">{{ f.d }}</div>
+                  </sc-for>
+                </div>
+              </div>
+
+              <sc-if value="{{ p.open }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:22px 20px 24px;background:#F4F5F7;border-top:1px solid #E0E3E8;display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px">
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">ICT breakdown</span>
+                    <sc-for list="{{ ict }}" as="i" hint-placeholder-count="3">
+                      <div style="display:flex;align-items:center;gap:10px">
+                        <span style="width:66px;font:400 13px Inter,sans-serif;color:#5F6672">{{ i.label }}</span>
+                        <div style="flex:1;height:8px;border-radius:4px;background:#E0E3E8;overflow:hidden"><div style="height:100%;border-radius:4px;background:{{ i.color }};width:{{ i.pct }}%"></div></div>
+                        <span style="width:56px;text-align:right;font:500 13px 'JetBrains Mono',monospace">{{ i.val }}</span>
+                      </div>
+                    </sc-for>
+                    <div style="display:flex;gap:24px;margin-top:6px;padding-top:12px;border-top:1px solid #E0E3E8">
+                      <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 11px Inter,sans-serif;color:#5F6672">Goals</span><span style="font:500 18px 'JetBrains Mono',monospace">19</span></div>
+                      <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 11px Inter,sans-serif;color:#5F6672">Assists</span><span style="font:500 18px 'JetBrains Mono',monospace">4</span></div>
+                      <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 11px Inter,sans-serif;color:#5F6672">Bonus</span><span style="font:500 18px 'JetBrains Mono',monospace">27</span></div>
+                      <div style="display:flex;flex-direction:column;gap:2px"><span style="font:400 11px Inter,sans-serif;color:#5F6672">Starts</span><span style="font:500 18px 'JetBrains Mono',monospace">22</span></div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Ownership trend · 12 GW</span>
+                    <div style="background:#FFFFFF;border-radius:8px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.06)">
+                      <svg viewBox="0 0 290 50" width="100%" height="60" preserveAspectRatio="none">
+                        <path d="{{ ownPath }}" fill="none" stroke="#4C72B0" stroke-width="2" stroke-linejoin="round"></path>
+                      </svg>
+                      <div style="display:flex;justify-content:space-between;margin-top:6px">
+                        <span style="font:400 11px Inter,sans-serif;color:#9BA1AB">GW13 · 78.0%</span>
+                        <span style="font:500 11px 'JetBrains Mono',monospace;color:#1B873B">GW24 · 85.2%</span>
+                      </div>
+                    </div>
+                    <div style="display:flex;gap:8px">
+                      <div style="flex:1;background:#EFF8F1;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:2px"><span style="font:400 11px Inter,sans-serif;color:#5F6672">Transfers in</span><span style="font:500 15px 'JetBrains Mono',monospace;color:#1B873B">+64,208</span></div>
+                      <div style="flex:1;background:#FFF0EE;border-radius:8px;padding:10px 12px;display:flex;flex-direction:column;gap:2px"><span style="font:400 11px Inter,sans-serif;color:#5F6672">Transfers out</span><span style="font:500 15px 'JetBrains Mono',monospace;color:#CF222E">-11,472</span></div>
+                    </div>
+                  </div>
+
+                  <div style="display:flex;flex-direction:column;gap:12px">
+                    <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Next 5 fixtures</span>
+                    <div style="display:flex;gap:6px">
+                      <sc-for list="{{ p.next }}" as="f" hint-placeholder-count="5">
+                        <div style="flex:1;border-radius:8px;padding:10px 0;display:flex;flex-direction:column;align-items:center;gap:3px;background:{{ f.bg }};color:{{ f.fg }}">
+                          <span style="font:400 10px Inter,sans-serif;opacity:.8">GW{{ f.gw }}</span>
+                          <span style="font:600 13px Inter,sans-serif">{{ f.opp }}</span>
+                          <span style="font:400 10px Inter,sans-serif;opacity:.8">{{ f.ha }} · {{ f.d }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:8px;margin-top:6px;padding-top:12px;border-top:1px solid #E0E3E8">
+                      <div style="display:flex;justify-content:space-between"><span style="font:400 13px Inter,sans-serif;color:#5F6672">Penalties</span><span style="font:500 13px 'JetBrains Mono',monospace">1st choice</span></div>
+                      <div style="display:flex;justify-content:space-between"><span style="font:400 13px Inter,sans-serif;color:#5F6672">Corners / IFK</span><span style="font:500 13px 'JetBrains Mono',monospace;color:#9BA1AB">—</span></div>
+                      <div style="display:flex;justify-content:space-between"><span style="font:400 13px Inter,sans-serif;color:#5F6672">xG over/under</span><span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">+2.58</span></div>
+                    </div>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <span style="font:400 13px Inter,sans-serif;color:#5F6672">Showing 1–12 of 642</span>
+          <div style="display:flex;align-items:center;gap:8px">
+            <button style="height:32px;padding:0 12px;border:1px solid #E0E3E8;background:#FFFFFF;border-radius:8px;font:500 13px Inter,sans-serif;color:#9BA1AB;cursor:not-allowed">Prev</button>
+            <span style="font:500 13px 'JetBrains Mono',monospace;color:#5F6672">1 / 26</span>
+            <button style="height:32px;padding:0 12px;border:1px solid #E0E3E8;background:#FFFFFF;border-radius:8px;font:500 13px Inter,sans-serif;cursor:pointer">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+    <sc-if value="{{ isTeam }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Team Analyser">
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8;position:sticky;top:0;z-index:20">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Team Analyser</h1>
+          <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">Rowan Athletic · Dylan Reeve · ID 4127883</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:#FFFFFF;border:1px solid #E0E3E8;border-radius:10px"><span style="font:400 13px Inter,sans-serif;color:#9BA1AB">Team ID</span><span style="font:500 13px 'JetBrains Mono',monospace">4127883</span></div>
+          <button style="height:36px;padding:0 14px;border:0;background:#1A1D23;color:#fff;border-radius:10px;font:500 13px Inter,sans-serif;cursor:pointer">Re-analyse</button>
+        </div>
+      </header>
+
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 56px;display:flex;flex-direction:column;gap:24px">
+        <section style="display:grid;grid-template-columns:repeat(6,1fr);gap:16px">
+          <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:6px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Overall pts</span><span style="font:500 22px/28px 'JetBrains Mono',monospace">1,384</span></div>
+          <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:6px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Overall rank</span><span style="font:500 22px/28px 'JetBrains Mono',monospace">142,308</span></div>
+          <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:6px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">GW24 pts</span><span style="font:500 22px/28px 'JetBrains Mono',monospace;color:#1B873B">68</span></div>
+          <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:6px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Squad value</span><span style="font:500 22px/28px 'JetBrains Mono',monospace">£102.4m</span></div>
+          <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:6px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Bench pts</span><span style="font:500 22px/28px 'JetBrains Mono',monospace;color:#BF8700">8</span></div>
+          <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:6px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Chips left</span><span style="font:500 22px/28px 'JetBrains Mono',monospace">4</span></div>
+        </section>
+
+        <section style="display:grid;grid-template-columns:1.4fr 1fr;gap:24px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between">
+              <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Squad · GW24</h2>
+              <span style="font:400 13px Inter,sans-serif;color:#5F6672">3-4-3 · 68 pts</span>
+            </div>
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:16px">
+              <div style="border-radius:8px;padding:22px 16px;display:flex;flex-direction:column-reverse;gap:20px;background:#2D8A4E;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 44px,transparent 44px 88px)">
+                <sc-for list="{{ squad }}" as="row" hint-placeholder-count="4">
+                  <div style="display:flex;justify-content:center;gap:18px">
+                    <sc-for list="{{ row.players }}" as="pl" hint-placeholder-count="3">
+                      <div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:74px">
+                        <div style="position:relative;width:48px;height:48px;border-radius:50%;background:#FFFFFF;border:3px solid {{ pl.ring }};display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.18)">
+                          <span style="font:500 13px 'JetBrains Mono',monospace;color:#1A1D23">{{ pl.pts }}</span>
+                        </div>
+                        <span style="font:600 11px/14px Inter,sans-serif;color:#FFFFFF;text-align:center">{{ pl.n }}</span>
+                        <span style="font:400 9px/10px Inter,sans-serif;color:rgba(255,255,255,.75)">{{ pl.t }} {{ pl.tag }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="margin-top:14px;padding-top:14px;border-top:1px solid #EBEDF0">
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Bench · 8 pts</span>
+                <div style="display:flex;gap:10px;margin-top:10px">
+                  <sc-for list="{{ bench }}" as="pl" hint-placeholder-count="4">
+                    <div style="flex:1;display:flex;align-items:center;gap:9px;padding:8px 10px;border-radius:8px;background:#F4F5F7">
+                      <div style="width:30px;height:30px;border-radius:50%;background:#FFFFFF;border:2px solid {{ pl.ring }};display:flex;align-items:center;justify-content:center;flex:none;opacity:.75"><span style="font:500 11px 'JetBrains Mono',monospace">{{ pl.pts }}</span></div>
+                      <div style="display:flex;flex-direction:column;gap:1px;min-width:0"><span style="font:600 12px/15px Inter,sans-serif;color:#5F6672;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">{{ pl.n }}</span><span style="font:400 10px/12px Inter,sans-serif;color:#9BA1AB">{{ pl.t }}</span></div>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between">
+                <span style="font:600 15px Inter,sans-serif">Points by gameweek</span>
+                <div style="display:flex;gap:14px">
+                  <span style="display:flex;align-items:center;gap:6px;font:400 12px Inter,sans-serif;color:#5F6672"><span style="width:10px;height:10px;border-radius:2px;background:#1B873B"></span>65+</span>
+                  <span style="display:flex;align-items:center;gap:6px;font:400 12px Inter,sans-serif;color:#5F6672"><span style="width:10px;height:10px;border-radius:2px;background:#4C72B0"></span>45–64</span>
+                  <span style="display:flex;align-items:center;gap:6px;font:400 12px Inter,sans-serif;color:#5F6672"><span style="width:10px;height:10px;border-radius:2px;background:#CF222E"></span>Under 45</span>
+                </div>
+              </div>
+              <div style="display:flex;align-items:flex-end;gap:5px;height:132px;position:relative;border-bottom:1px solid #E0E3E8">
+                <div style="position:absolute;left:0;right:0;bottom:44px;height:1px;background:#C4C9D1;border-top:1px dashed #C4C9D1"></div>
+                <sc-for list="{{ bars }}" as="b" hint-placeholder-count="24">
+                  <div style="flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%" title="{{ b.gw }} · {{ b.pts }} pts">
+                    <div style="width:100%;border-radius:3px 3px 0 0;background:{{ b.color }};height:{{ b.h }}"></div>
+                  </div>
+                </sc-for>
+              </div>
+              <div style="display:flex;justify-content:space-between;font:400 11px 'JetBrains Mono',monospace;color:#9BA1AB"><span>GW1</span><span>GW8</span><span>GW16</span><span>GW24</span></div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Weaknesses detected</h2>
+            <sc-for list="{{ weaknesses }}" as="w" hint-placeholder-count="3">
+              <div style="border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;background:{{ w.bg }}">
+                <div style="display:flex;align-items:center;justify-content:space-between;gap:10px">
+                  <span style="font:600 15px/20px Inter,sans-serif;color:{{ w.fg }}">{{ w.title }}</span>
+                  <span style="flex:none;padding:2px 8px;border-radius:6px;background:#FFFFFF;font:500 10px Inter,sans-serif;letter-spacing:.06em;text-transform:uppercase;color:{{ w.fg }}">{{ w.sev }}</span>
+                </div>
+                <p style="margin:0;font:400 13px/18px Inter,sans-serif;color:#5F6672">{{ w.body }}</p>
+              </div>
+            </sc-for>
+
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+              <span style="font:600 15px Inter,sans-serif">Positional strength</span>
+              <div style="display:flex;flex-direction:column;gap:11px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;font:500 12px Inter,sans-serif;color:#5F6672">GKP</span><div style="flex:1;height:8px;border-radius:4px;background:#EBEDF0;overflow:hidden"><div style="width:58%;height:100%;border-radius:4px;background:#4C72B0"></div></div><span style="width:44px;text-align:right;font:500 12px 'JetBrains Mono',monospace">89</span></div>
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;font:500 12px Inter,sans-serif;color:#5F6672">DEF</span><div style="flex:1;height:8px;border-radius:4px;background:#EBEDF0;overflow:hidden"><div style="width:74%;height:100%;border-radius:4px;background:#4C72B0"></div></div><span style="width:44px;text-align:right;font:500 12px 'JetBrains Mono',monospace">318</span></div>
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;font:500 12px Inter,sans-serif;color:#5F6672">MID</span><div style="flex:1;height:8px;border-radius:4px;background:#EBEDF0;overflow:hidden"><div style="width:96%;height:100%;border-radius:4px;background:#1B873B"></div></div><span style="width:44px;text-align:right;font:500 12px 'JetBrains Mono',monospace">507</span></div>
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:34px;font:500 12px Inter,sans-serif;color:#5F6672">FWD</span><div style="flex:1;height:8px;border-radius:4px;background:#EBEDF0;overflow:hidden"><div style="width:88%;height:100%;border-radius:4px;background:#1B873B"></div></div><span style="width:44px;text-align:right;font:500 12px 'JetBrains Mono',monospace">470</span></div>
+              </div>
+              <p style="margin:0;font:400 13px/18px Inter,sans-serif;color:#5F6672">Your midfield carries 37% of season points — the strongest line in your squad. Defence is the weak link: 318 points from five slots, 11% below the top-10k average.</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+    </sc-if>
+    <sc-if value="{{ isTransfers }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Transfer Hub">
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8;position:sticky;top:0;z-index:20">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Transfer Hub</h1>
+          <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">1 free transfer · £0.8m in the bank</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:#FFFFFF;border:1px solid #E0E3E8;border-radius:10px"><span style="font:400 13px Inter,sans-serif;color:#5F6672">Horizon</span><span style="font:500 13px 'JetBrains Mono',monospace">next 5 GW</span></div>
+          <button style="height:36px;padding:0 14px;border:0;background:#1A1D23;color:#fff;border-radius:10px;font:500 13px Inter,sans-serif;cursor:pointer">Recalculate</button>
+        </div>
+      </header>
+
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 56px;display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;gap:4px;padding:4px;background:#EBEDF0;border-radius:10px;width:fit-content">
+          <button style="height:32px;padding:0 16px;border:0;border-radius:7px;background:#FFFFFF;color:#1A1D23;font:600 13px Inter,sans-serif;box-shadow:0 1px 2px rgba(0,0,0,.08);cursor:pointer">Replacements</button>
+          <button style="height:32px;padding:0 16px;border:0;border-radius:7px;background:transparent;color:#5F6672;font:500 13px Inter,sans-serif;cursor:pointer">Worst value</button>
+          <button style="height:32px;padding:0 16px;border:0;border-radius:7px;background:transparent;color:#5F6672;font:500 13px Inter,sans-serif;cursor:pointer">Differentials</button>
+        </div>
+
+        <section style="display:flex;flex-direction:column;gap:16px">
+          <sc-for list="{{ transferCards }}" as="c" hint-placeholder-count="2">
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden">
+              <div style="display:grid;grid-template-columns:280px 44px 1fr;align-items:stretch">
+                <div style="background:#FFF0EE;padding:18px 20px;display:flex;flex-direction:column;gap:10px">
+                  <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#CF222E;text-transform:uppercase">Transfer out</span>
+                  <div style="display:flex;flex-direction:column;gap:2px">
+                    <span style="font:700 22px/28px Inter,sans-serif;letter-spacing:-.01em">{{ c.out.n }}</span>
+                    <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">{{ c.out.t }} · {{ c.out.pos }} · {{ c.out.price }}</span>
+                  </div>
+                  <div style="display:flex;gap:20px">
+                    <div style="display:flex;flex-direction:column;gap:1px"><span style="font:400 11px Inter,sans-serif;color:#5F6672">Form</span><span style="font:500 15px 'JetBrains Mono',monospace;color:#CF222E">{{ c.out.form }}</span></div>
+                    <div style="display:flex;flex-direction:column;gap:1px"><span style="font:400 11px Inter,sans-serif;color:#5F6672">PPG</span><span style="font:500 15px 'JetBrains Mono',monospace">{{ c.out.ppg }}</span></div>
+                  </div>
+                  <div style="display:flex;gap:5px">
+                    <sc-for list="{{ c.out.fixtures }}" as="f" hint-placeholder-count="3">
+                      <div style="width:44px;height:30px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:{{ f.bg }};color:{{ f.fg }}"><span style="font:500 10px/11px 'JetBrains Mono',monospace">{{ f.opp }}</span><span style="font:400 9px/10px Inter,sans-serif;opacity:.75">{{ f.ha }} · {{ f.d }}</span></div>
+                    </sc-for>
+                  </div>
+                  <p style="margin:2px 0 0;font:400 13px/18px Inter,sans-serif;color:#CF222E">{{ c.out.reason }}</p>
+                </div>
+
+                <div style="display:flex;align-items:center;justify-content:center;background:#FAFBFC">
+                  <svg width="20" height="20" fill="none" stroke="#9BA1AB" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M13 6l6 6-6 6M5 12h14"></path></svg>
+                </div>
+
+                <div style="padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+                  <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#1B873B;text-transform:uppercase">Transfer in</span>
+                  <sc-for list="{{ c.ins }}" as="i" hint-placeholder-count="2">
+                    <div style="display:grid;grid-template-columns:158px 88px 1fr 150px;align-items:center;gap:16px;padding:12px 14px;border-radius:8px;background:#EFF8F1">
+                      <div style="display:flex;flex-direction:column;gap:2px">
+                        <span style="font:600 15px/20px Inter,sans-serif">{{ i.n }}</span>
+                        <span style="font:400 11px/15px Inter,sans-serif;color:#5F6672">{{ i.t }} · {{ i.price }} · form {{ i.form }}</span>
+                      </div>
+                      <div style="display:flex;flex-direction:column;gap:1px"><span style="font:400 10px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">xPts gain</span><span style="font:500 15px 'JetBrains Mono',monospace;color:#1B873B">{{ i.xpts }}</span></div>
+                      <div style="display:flex;flex-direction:column;gap:6px;min-width:0">
+                        <div style="display:flex;align-items:center;gap:8px"><span style="width:46px;font:400 10px Inter,sans-serif;color:#5F6672">Value</span><div style="flex:1;height:6px;border-radius:3px;background:#D8E5DC;overflow:hidden"><div style="height:100%;border-radius:3px;background:#4C72B0;width:{{ i.value }}%"></div></div></div>
+                        <div style="display:flex;align-items:center;gap:8px"><span style="width:46px;font:400 10px Inter,sans-serif;color:#5F6672">Captain</span><div style="flex:1;height:6px;border-radius:3px;background:#D8E5DC;overflow:hidden"><div style="height:100%;border-radius:3px;background:#DD8452;width:{{ i.cap }}%"></div></div></div>
+                      </div>
+                      <div style="display:flex;flex-wrap:wrap;gap:4px;justify-content:flex-end">
+                        <sc-for list="{{ i.tags }}" as="t" hint-placeholder-count="3">
+                          <span style="padding:2px 7px;border-radius:6px;background:#FFFFFF;font:500 10px Inter,sans-serif;color:#5F6672">{{ t }}</span>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </sc-for>
+                  <div style="display:flex;gap:28px;padding-top:10px;border-top:1px solid #EBEDF0">
+                    <span style="font:400 13px Inter,sans-serif;color:#5F6672">Net cost <span style="font:500 13px 'JetBrains Mono',monospace;color:#1A1D23">{{ c.net }}</span></span>
+                    <span style="font:400 13px Inter,sans-serif;color:#5F6672">xPts gain over 5 GW <span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">{{ c.gain }}</span></span>
+                    <span style="font:400 13px Inter,sans-serif;color:#5F6672">Hit required <span style="font:500 13px 'JetBrains Mono',monospace">none</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-for>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Differentials under 12% owned</h2>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">Ranked by xPts over the next 5 gameweeks</span>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px">
+            <sc-for list="{{ differentials }}" as="d" hint-placeholder-count="6">
+              <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:16px 18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:10px">
+                  <div style="display:flex;flex-direction:column;gap:1px">
+                    <span style="font:600 15px/20px Inter,sans-serif">{{ d.n }}</span>
+                    <span style="font:400 11px/15px Inter,sans-serif;color:#5F6672">{{ d.t }} · {{ d.pos }} · {{ d.price }}</span>
+                  </div>
+                  <span style="flex:none;padding:3px 8px;border-radius:6px;background:#E7F5FF;font:500 11px 'JetBrains Mono',monospace;color:#1971C2">{{ d.own }}</span>
+                </div>
+                <div style="display:flex;gap:20px">
+                  <div style="display:flex;flex-direction:column;gap:1px"><span style="font:400 10px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">xPts</span><span style="font:500 18px 'JetBrains Mono',monospace;color:#1B873B">{{ d.xpts }}</span></div>
+                  <div style="display:flex;flex-direction:column;gap:1px"><span style="font:400 10px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Form</span><span style="font:500 18px 'JetBrains Mono',monospace">{{ d.form }}</span></div>
+                </div>
+                <p style="margin:0;font:400 13px/18px Inter,sans-serif;color:#5F6672">{{ d.why }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isCaptain }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Captain and Chips">
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8;position:sticky;top:0;z-index:20">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Captain &amp; Chips</h1>
+          <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">GW24 · deadline in 3d 14h</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:#FFFFFF;border:1px solid #E0E3E8;border-radius:10px"><span style="font:400 13px Inter,sans-serif;color:#5F6672">Community pick</span><span style="font:500 13px Inter,sans-serif">Haaland · 41.2%</span></div>
+      </header>
+
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 56px;display:flex;flex-direction:column;gap:28px">
+        <section style="display:grid;grid-template-columns:1.3fr 1fr;gap:24px;align-items:start">
+          <div style="background:#FFFFFF;border-radius:14px;border-left:3px solid #1B873B;padding:24px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:center;gap:8px">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#E8A317"><path d="M5 17h14l1.5-9-5 3L12 5l-3.5 6-5-3z"></path></svg>
+              <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#BF8700;text-transform:uppercase">Captain pick — GW24</span>
+            </div>
+            <div style="display:flex;gap:22px;align-items:flex-start">
+              <div style="width:104px;height:124px;flex:none;border-radius:10px;background:repeating-linear-gradient(135deg,#EBEDF0 0 6px,#F4F5F7 6px 12px);display:flex;align-items:flex-end;justify-content:center;padding:8px"><span style="font:400 9px 'JetBrains Mono',monospace;color:#9BA1AB">player shot</span></div>
+              <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                <span style="font:700 28px/34px Inter,sans-serif;letter-spacing:-.02em">{{ cap1.full }}</span>
+                <span style="font:400 15px/22px Inter,sans-serif;color:#5F6672">{{ cap1.team }} · {{ cap1.pos }} · {{ cap1.price }}</span>
+                <div style="display:flex;gap:8px;margin-top:10px">
+                  <sc-for list="{{ cap1.fixtures }}" as="f" hint-placeholder-count="3">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                      <div style="width:56px;height:38px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 15px 'JetBrains Mono',monospace;background:{{ f.bg }};color:{{ f.fg }}">{{ f.d }}</div>
+                      <span style="font:500 10px Inter,sans-serif;color:#5F6672">{{ f.label }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="flex:none;text-align:right;display:flex;flex-direction:column;gap:2px">
+                <span style="font:500 36px/42px 'JetBrains Mono',monospace;color:#1B873B">{{ cap1.xpts }}</span>
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">xPts</span>
+              </div>
+            </div>
+            <div style="display:flex;gap:30px;padding-top:16px;border-top:1px solid #E0E3E8">
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Form</span><span style="font:500 18px 'JetBrains Mono',monospace;color:#1B873B">{{ cap1.form }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">xG/90</span><span style="font:500 18px 'JetBrains Mono',monospace">{{ cap1.xg }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Season pts</span><span style="font:500 18px 'JetBrains Mono',monospace">{{ cap1.pts }}</span></div>
+              <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Owned</span><span style="font:500 18px 'JetBrains Mono',monospace">{{ cap1.own }}</span></div>
+            </div>
+            <p style="margin:0;font:400 15px/22px Inter,sans-serif;max-width:58ch">{{ cap1.why }}</p>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Alternatives</h2>
+            <sc-for list="{{ capRest }}" as="c" hint-placeholder-count="4">
+              <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:14px 16px;display:flex;flex-direction:column;gap:9px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <span style="width:18px;font:500 13px 'JetBrains Mono',monospace;color:#9BA1AB">{{ c.rank }}</span>
+                  <span style="font:600 15px Inter,sans-serif">{{ c.name }}</span>
+                  <span style="font:400 12px Inter,sans-serif;color:#9BA1AB">{{ c.short }} · {{ c.price }}</span>
+                  <span style="flex:1"></span>
+                  <span style="font:500 15px 'JetBrains Mono',monospace;color:#1B873B">{{ c.xpts }}</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="flex:1;height:6px;border-radius:3px;background:#EBEDF0;overflow:hidden"><div style="height:100%;border-radius:3px;background:#4C72B0;width:{{ c.score }}%"></div></div>
+                  <div style="display:flex;gap:4px">
+                    <sc-for list="{{ c.fixtures }}" as="f" hint-placeholder-count="3">
+                      <div style="width:34px;height:24px;border-radius:5px;display:flex;align-items:center;justify-content:center;font:500 10px 'JetBrains Mono',monospace;background:{{ f.bg }};color:{{ f.fg }}">{{ f.opp }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+                <p style="margin:0;font:400 13px/18px Inter,sans-serif;color:#5F6672">{{ c.why }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Chip strategy · GW24 to GW38</h2>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">All four chips unused</span>
+          </div>
+
+          <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:20px">
+            <div style="display:flex;gap:6px">
+              <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="15">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:8px">
+                  <div style="height:26px;display:flex;align-items:center;justify-content:center">
+                    <sc-if value="{{ t.hasMarker }}" hint-placeholder-val="{{ false }}">
+                      <span style="padding:3px 9px;border-radius:6px;font:700 11px Inter,sans-serif;letter-spacing:.04em;color:#FFFFFF;background:{{ t.marker.color }}">{{ t.marker.code }}</span>
+                    </sc-if>
+                  </div>
+                  <div style="width:100%;height:52px;border-radius:8px;border:1px solid {{ t.border }};background:{{ t.bg }};display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px">
+                    <span style="font:500 13px 'JetBrains Mono',monospace">{{ t.num }}</span>
+                    <span style="font:500 9px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">{{ t.kind }}</span>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+            <sc-for list="{{ chips }}" as="c" hint-placeholder-count="4">
+              <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px;display:flex;flex-direction:column;gap:10px">
+                <div style="display:flex;align-items:center;gap:10px">
+                  <div style="width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;font:700 12px Inter,sans-serif;background:{{ c.bg }};color:{{ c.color }}">{{ c.code }}</div>
+                  <div style="display:flex;flex-direction:column;gap:1px">
+                    <span style="font:600 15px/19px Inter,sans-serif">{{ c.name }}</span>
+                    <span style="font:500 12px/15px 'JetBrains Mono',monospace;color:{{ c.color }}">{{ c.gw }}</span>
+                  </div>
+                </div>
+                <p style="margin:0;font:400 13px/18px Inter,sans-serif;color:#5F6672">{{ c.why }}</p>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isSquad }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Squad Builder">
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8;position:sticky;top:0;z-index:20">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Squad Builder</h1>
+          <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">Optimal XV within £100.0m</span>
+        </div>
+        <div style="display:flex;gap:4px;padding:4px;background:#EBEDF0;border-radius:10px">
+          <button onClick="{{ setAuto }}" style="height:30px;padding:0 14px;border:0;border-radius:7px;cursor:pointer;font:600 13px Inter,sans-serif;background:{{ modeAuto.bg }};color:{{ modeAuto.fg }};box-shadow:{{ modeAuto.sh }}">Auto build</button>
+          <button onClick="{{ setPick }}" style="height:30px;padding:0 14px;border:0;border-radius:7px;cursor:pointer;font:600 13px Inter,sans-serif;background:{{ modePick.bg }};color:{{ modePick.fg }};box-shadow:{{ modePick.sh }}">Pick &amp; fill</button>
+        </div>
+      </header>
+
+      <sc-if value="{{ isAuto }}" hint-placeholder-val="{{ true }}">
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 56px;display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start">
+        <div style="display:flex;flex-direction:column;gap:20px">
+          <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between">
+              <span style="font:600 15px Inter,sans-serif">Budget</span>
+              <span style="font:400 13px Inter,sans-serif;color:#5F6672">Spent <span style="font:500 13px 'JetBrains Mono',monospace;color:#1A1D23">£99.6m</span> · Remaining <span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">£0.4m</span></span>
+            </div>
+            <div style="height:10px;border-radius:5px;background:#EBEDF0;overflow:hidden"><div style="width:99.6%;height:100%;border-radius:5px;background:#4C72B0"></div></div>
+            <div style="display:flex;gap:10px;margin-top:4px">
+              <div style="flex:1;display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:8px;background:#EFF8F1"><span style="font:500 12px Inter,sans-serif;color:#1B873B">GKP</span><span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">2/2</span></div>
+              <div style="flex:1;display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:8px;background:#EFF8F1"><span style="font:500 12px Inter,sans-serif;color:#1B873B">DEF</span><span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">5/5</span></div>
+              <div style="flex:1;display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:8px;background:#EFF8F1"><span style="font:500 12px Inter,sans-serif;color:#1B873B">MID</span><span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">5/5</span></div>
+              <div style="flex:1;display:flex;align-items:center;justify-content:space-between;padding:9px 12px;border-radius:8px;background:#EFF8F1"><span style="font:500 12px Inter,sans-serif;color:#1B873B">FWD</span><span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">3/3</span></div>
+            </div>
+          </div>
+
+          <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:16px">
+            <div style="border-radius:8px;padding:22px 16px;display:flex;flex-direction:column-reverse;gap:20px;background:#2D8A4E;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 44px,transparent 44px 88px)">
+              <sc-for list="{{ squad }}" as="row" hint-placeholder-count="4">
+                <div style="display:flex;justify-content:center;gap:18px">
+                  <sc-for list="{{ row.players }}" as="pl" hint-placeholder-count="3">
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:74px">
+                      <div style="width:48px;height:48px;border-radius:50%;background:#FFFFFF;border:3px solid {{ pl.ring }};display:flex;align-items:center;justify-content:center;box-shadow:0 1px 3px rgba(0,0,0,.18)"><span style="font:500 12px 'JetBrains Mono',monospace">{{ pl.t }}</span></div>
+                      <span style="font:600 11px/14px Inter,sans-serif;color:#FFFFFF;text-align:center">{{ pl.n }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px">
+              <div style="background:#F4F5F7;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Total xPts</span><span style="font:500 22px 'JetBrains Mono',monospace;color:#1B873B">371.4</span></div>
+              <div style="background:#F4F5F7;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Squad cost</span><span style="font:500 22px 'JetBrains Mono',monospace">£99.6m</span></div>
+              <div style="background:#F4F5F7;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Bench strength</span><span style="font:500 22px 'JetBrains Mono',monospace;color:#BF8700">Fair</span></div>
+              <div style="background:#F4F5F7;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Locked picks</span><span style="font:500 22px 'JetBrains Mono',monospace">0</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:14px">
+          <div style="display:flex;align-items:baseline;justify-content:space-between">
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;letter-spacing:-.01em">Why these picks</h2>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">Top 5 by xPts</span>
+          </div>
+          <sc-for list="{{ builderPicks }}" as="b" hint-placeholder-count="5">
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:16px 18px;display:flex;flex-direction:column;gap:11px">
+              <div style="display:flex;align-items:center;gap:10px">
+                <span style="font:600 15px Inter,sans-serif">{{ b.n }}</span>
+                <span style="font:400 12px Inter,sans-serif;color:#9BA1AB">{{ b.t }} · {{ b.pos }} · {{ b.price }}</span>
+                <span style="flex:1"></span>
+                <span style="padding:3px 8px;border-radius:6px;background:#EFF8F1;font:500 13px 'JetBrains Mono',monospace;color:#1B873B">{{ b.xpts }}</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:7px">
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:62px;font:400 11px Inter,sans-serif;color:#5F6672">Nailed</span><div style="flex:1;height:6px;border-radius:3px;background:#EBEDF0;overflow:hidden"><div style="height:100%;border-radius:3px;background:#4C72B0;width:{{ b.nail }}%"></div></div></div>
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:62px;font:400 11px Inter,sans-serif;color:#5F6672">Goal threat</span><div style="flex:1;height:6px;border-radius:3px;background:#EBEDF0;overflow:hidden"><div style="height:100%;border-radius:3px;background:#DD8452;width:{{ b.goal }}%"></div></div></div>
+                <div style="display:flex;align-items:center;gap:10px"><span style="width:62px;font:400 11px Inter,sans-serif;color:#5F6672">Fixtures</span><div style="flex:1;height:6px;border-radius:3px;background:#EBEDF0;overflow:hidden"><div style="height:100%;border-radius:3px;background:#8172B3;width:{{ b.fixture }}%"></div></div></div>
+              </div>
+              <p style="margin:0;font:400 13px/18px Inter,sans-serif;color:#5F6672">{{ b.why }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ isPick }}" hint-placeholder-val="{{ false }}">
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 56px;display:flex;flex-direction:column;gap:22px">
+
+        <div style="display:flex;align-items:center;gap:10px">
+          <button onClick="{{ step1 }}" style="display:flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:8px;cursor:pointer;font:500 13px Inter,sans-serif;border:1px solid {{ s1.bd }};background:{{ s1.bg }};color:{{ s1.fg }}"><span style="font:500 11px 'JetBrains Mono',monospace;opacity:.7">1</span>Lock your keepers</button>
+          <svg width="14" height="14" fill="none" stroke="#C4C9D1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M9 6l6 6-6 6"></path></svg>
+          <button onClick="{{ step2 }}" style="display:flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:8px;cursor:pointer;font:500 13px Inter,sans-serif;border:1px solid {{ s2.bd }};background:{{ s2.bg }};color:{{ s2.fg }}"><span style="font:500 11px 'JetBrains Mono',monospace;opacity:.7">2</span>Check the constraints</button>
+          <svg width="14" height="14" fill="none" stroke="#C4C9D1" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="2" d="M9 6l6 6-6 6"></path></svg>
+          <button onClick="{{ step3 }}" style="display:flex;align-items:center;gap:8px;height:34px;padding:0 14px;border-radius:8px;cursor:pointer;font:500 13px Inter,sans-serif;border:1px solid {{ s3.bd }};background:{{ s3.bg }};color:{{ s3.fg }}"><span style="font:500 11px 'JetBrains Mono',monospace;opacity:.7">3</span>Fill the rest</button>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 400px;gap:24px;align-items:start">
+
+          <div style="display:flex;flex-direction:column;gap:20px">
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+              <div style="display:flex;align-items:baseline;justify-content:space-between">
+                <span style="font:600 15px Inter,sans-serif">Budget</span>
+                <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+                  <span style="font:400 13px Inter,sans-serif;color:#5F6672">Squad <span style="font:500 13px 'JetBrains Mono',monospace;color:#1A1D23">£99.9m</span> · Remaining <span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">£0.1m</span></span>
+                </sc-if>
+                <sc-if value="{{ isStep12 }}" hint-placeholder-val="{{ true }}">
+                  <span style="font:400 13px Inter,sans-serif;color:#5F6672">Locked <span style="font:500 13px 'JetBrains Mono',monospace;color:#1A1D23">£36.8m</span> · For 11 slots <span style="font:500 13px 'JetBrains Mono',monospace;color:#1971C2">£63.2m</span></span>
+                </sc-if>
+              </div>
+              <div style="height:10px;border-radius:5px;background:#EBEDF0;overflow:hidden;display:flex">
+                <div style="width:36.8%;height:100%;background:#1A1D23"></div>
+                <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+                  <div style="width:63.1%;height:100%;background:#4C72B0"></div>
+                </sc-if>
+                <sc-if value="{{ isStep12 }}" hint-placeholder-val="{{ true }}">
+                  <div style="width:63.2%;height:100%;background:repeating-linear-gradient(135deg,#D0EBFF 0 5px,#EBEDF0 5px 10px)"></div>
+                </sc-if>
+              </div>
+              <div style="display:flex;gap:18px">
+                <span style="display:flex;align-items:center;gap:6px;font:400 11px Inter,sans-serif;color:#5F6672"><span style="width:10px;height:10px;border-radius:2px;background:#1A1D23"></span>Your locks · 4</span>
+                <span style="display:flex;align-items:center;gap:6px;font:400 11px Inter,sans-serif;color:#5F6672"><span style="width:10px;height:10px;border-radius:2px;background:#4C72B0"></span>Auto-filled · 11</span>
+                <span style="flex:1"></span>
+                <span style="font:400 11px Inter,sans-serif;color:#9BA1AB">Average left per open slot: £5.7m</span>
+              </div>
+            </div>
+
+            <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:16px">
+              <div style="border-radius:8px;padding:22px 16px;display:flex;flex-direction:column-reverse;gap:18px;background:#2D8A4E;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 44px,transparent 44px 88px)">
+                <sc-for list="{{ pickPitch }}" as="row" hint-placeholder-count="4">
+                  <div style="display:flex;justify-content:center;gap:14px">
+                    <sc-for list="{{ row.slots }}" as="pl" hint-placeholder-count="4">
+                      <div style="display:flex;flex-direction:column;align-items:center;gap:5px;width:70px">
+                        <div style="position:relative;width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:{{ pl.slotBg }};border:{{ pl.slotBorder }}">
+                          <sc-if value="{{ pl.empty }}" hint-placeholder-val="{{ false }}">
+                            <span style="font:500 10px Inter,sans-serif;letter-spacing:.04em;color:rgba(255,255,255,.9)">{{ pl.pos }}</span>
+                          </sc-if>
+                          <sc-if value="{{ pl.locked }}" hint-placeholder-val="{{ false }}">
+                            <span style="font:500 11px 'JetBrains Mono',monospace;color:#1A1D23">{{ pl.t }}</span>
+                          </sc-if>
+                          <sc-if value="{{ pl.isAuto }}" hint-placeholder-val="{{ false }}">
+                            <span style="font:500 11px 'JetBrains Mono',monospace;color:#5F6672">{{ pl.t }}</span>
+                          </sc-if>
+                          <sc-if value="{{ pl.locked }}" hint-placeholder-val="{{ false }}">
+                            <span style="position:absolute;top:-4px;right:-4px;width:17px;height:17px;border-radius:50%;background:#1A1D23;display:flex;align-items:center;justify-content:center">
+                              <svg width="9" height="9" viewBox="0 0 20 20" fill="#FFFFFF"><path d="M5 9V7a5 5 0 0110 0v2h1v9H4V9h1zm2 0h6V7a3 3 0 00-6 0v2z"></path></svg>
+                            </span>
+                          </sc-if>
+                        </div>
+                        <sc-if value="{{ pl.empty }}" hint-placeholder-val="{{ false }}">
+                          <span style="font:400 10px/13px Inter,sans-serif;color:rgba(255,255,255,.72);text-align:center">open</span>
+                        </sc-if>
+                        <sc-if value="{{ pl.locked }}" hint-placeholder-val="{{ false }}">
+                          <span style="font:600 11px/14px Inter,sans-serif;color:#FFFFFF;text-align:center">{{ pl.n }}</span>
+                        </sc-if>
+                        <sc-if value="{{ pl.isAuto }}" hint-placeholder-val="{{ false }}">
+                          <span style="font:500 11px/14px Inter,sans-serif;color:rgba(255,255,255,.9);text-align:center">{{ pl.n }}</span>
+                        </sc-if>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-for>
+              </div>
+
+              <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:16px">
+                  <div style="background:#F4F5F7;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Total xPts</span><span style="font:500 22px 'JetBrains Mono',monospace;color:#1B873B">360.7</span></div>
+                  <div style="background:#F4F5F7;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Cost of locks</span><span style="font:500 22px 'JetBrains Mono',monospace">£36.8m</span></div>
+                  <div style="background:#F4F5F7;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">Bench strength</span><span style="font:500 22px 'JetBrains Mono',monospace;color:#BF8700">Fair</span></div>
+                  <div style="background:#F4F5F7;border-radius:8px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">vs auto build</span><span style="font:500 22px 'JetBrains Mono',monospace;color:#CF222E">−10.7</span></div>
+                </div>
+                <div style="margin-top:14px;padding:14px 16px;border-radius:8px;background:#FFFBEB;display:flex;gap:11px;align-items:flex-start">
+                  <svg width="17" height="17" fill="none" stroke="#BF8700" viewBox="0 0 24 24" style="flex:none;margin-top:2px"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" d="M12 9v4m0 3h.01M10.3 4.3L3 17a1.8 1.8 0 001.6 2.7h14.8A1.8 1.8 0 0021 17L13.7 4.3a1.9 1.9 0 00-3.4 0z"></path></svg>
+                  <div style="display:flex;flex-direction:column;gap:3px">
+                    <span style="font:600 13px/18px Inter,sans-serif;color:#BF8700">Your locks cost 10.7 xPts against the unconstrained XV</span>
+                    <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">Three Arsenal players close the door on Saliba and force a £4.0m fifth defender. Dropping Raya frees £1.2m and reopens the Arsenal slot.</span>
+                  </div>
+                </div>
+              </sc-if>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:16px">
+
+            <sc-if value="{{ isStep1 }}" hint-placeholder-val="{{ true }}">
+              <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;flex-direction:column;gap:4px">
+                  <span style="font:600 15px Inter,sans-serif">Search and lock</span>
+                  <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">Lock the players you refuse to give up. Everything else gets filled by xPts within your budget and the 3-per-club cap.</span>
+                </div>
+                <div style="display:flex;gap:6px">
+                  <span style="padding:5px 12px;border-radius:6px;background:#D0EBFF;color:#1971C2;font:500 12px Inter,sans-serif">All</span>
+                  <span style="padding:5px 12px;border-radius:6px;background:#FFFFFF;border:1px solid #E0E3E8;color:#5F6672;font:500 12px Inter,sans-serif">GKP</span>
+                  <span style="padding:5px 12px;border-radius:6px;background:#FFFFFF;border:1px solid #E0E3E8;color:#5F6672;font:500 12px Inter,sans-serif">DEF</span>
+                  <span style="padding:5px 12px;border-radius:6px;background:#FFFFFF;border:1px solid #E0E3E8;color:#5F6672;font:500 12px Inter,sans-serif">MID</span>
+                  <span style="padding:5px 12px;border-radius:6px;background:#FFFFFF;border:1px solid #E0E3E8;color:#5F6672;font:500 12px Inter,sans-serif">FWD</span>
+                </div>
+                <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;border:1px solid #2196F3;border-radius:8px;box-shadow:0 0 0 3px rgba(33,150,243,.16)">
+                  <svg width="15" height="15" fill="none" stroke="#5F6672" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1.8" d="M21 21l-5-5m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                  <span style="font:400 13px Inter,sans-serif;color:#1A1D23">sa</span>
+                  <span style="width:1px;height:15px;background:#1A1D23"></span>
+                </div>
+                <div style="border:1px solid #E0E3E8;border-radius:8px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.10)">
+                  <sc-for list="{{ searchRows }}" as="r" hint-placeholder-count="6">
+                    <div style="display:flex;align-items:center;gap:10px;padding:9px 12px;border-bottom:1px solid #F1F2F4;background:{{ r.bg }}">
+                      <span style="width:34px;font:500 10px Inter,sans-serif;letter-spacing:.04em;color:#5F6672">{{ r.pos }}</span>
+                      <span style="font:600 13px Inter,sans-serif;color:{{ r.fg }}">{{ r.n }}</span>
+                      <span style="font:400 11px Inter,sans-serif;color:#9BA1AB">{{ r.t }}</span>
+                      <span style="flex:1;font:400 11px Inter,sans-serif;color:{{ r.fg }};text-align:right">{{ r.note }}</span>
+                      <span style="font:400 11px 'JetBrains Mono',monospace;color:#9BA1AB">{{ r.sel }}</span>
+                      <span style="width:48px;text-align:right;font:500 13px 'JetBrains Mono',monospace;color:{{ r.fg }}">{{ r.price }}</span>
+                    </div>
+                  </sc-for>
+                </div>
+                <span style="font:400 11px/16px Inter,sans-serif;color:#9BA1AB">Blocked rows explain themselves rather than disappearing — a silently missing player reads as a bug.</span>
+              </div>
+
+              <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+                <div style="display:flex;align-items:baseline;justify-content:space-between">
+                  <span style="font:600 15px Inter,sans-serif">Locked · 4 of 15</span>
+                  <span style="font:400 13px Inter,sans-serif;color:#1971C2">Clear all</span>
+                </div>
+                <div style="display:flex;flex-wrap:wrap;gap:8px">
+                  <sc-for list="{{ lockedChips }}" as="c" hint-placeholder-count="4">
+                    <div style="display:flex;align-items:center;gap:8px;padding:6px 8px 6px 10px;border-radius:8px;background:#F4F5F7;border-left:3px solid {{ c.ring }}">
+                      <span style="font:500 10px Inter,sans-serif;color:#5F6672">{{ c.pos }}</span>
+                      <span style="font:600 13px Inter,sans-serif">{{ c.n }}</span>
+                      <span style="font:400 11px 'JetBrains Mono',monospace;color:#5F6672">{{ c.price }}</span>
+                      <span style="width:18px;height:18px;border-radius:50%;background:#E0E3E8;display:flex;align-items:center;justify-content:center;font:500 12px Inter,sans-serif;color:#5F6672;cursor:pointer">×</span>
+                    </div>
+                  </sc-for>
+                </div>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ isStep2 }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+                <span style="font:600 15px Inter,sans-serif">Slots to fill</span>
+                <sc-for list="{{ posCounts }}" as="p" hint-placeholder-count="4">
+                  <div style="display:flex;align-items:center;gap:12px">
+                    <span style="width:34px;font:500 12px Inter,sans-serif;color:#5F6672">{{ p.pos }}</span>
+                    <div style="flex:1;height:8px;border-radius:4px;background:#EBEDF0;overflow:hidden"><div style="height:100%;border-radius:4px;background:#1A1D23;width:{{ p.pct }}%"></div></div>
+                    <span style="width:52px;text-align:right;font:500 13px 'JetBrains Mono',monospace">{{ p.have }}/{{ p.need }}</span>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+                <span style="font:600 15px Inter,sans-serif">Club limits</span>
+                <sc-for list="{{ teamCaps }}" as="t" hint-placeholder-count="2">
+                  <div style="display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:8px;background:{{ t.bg }}">
+                    <span style="font:600 13px Inter,sans-serif;color:{{ t.fg }}">{{ t.t }}</span>
+                    <span style="font:500 13px 'JetBrains Mono',monospace;color:{{ t.fg }}">{{ t.have }}/{{ t.cap }}</span>
+                    <span style="flex:1;text-align:right;font:400 12px Inter,sans-serif;color:{{ t.fg }}">{{ t.note }}</span>
+                  </div>
+                </sc-for>
+                <p style="margin:0;font:400 13px/18px Inter,sans-serif;color:#5F6672">Arsenal is full, so the fill step will skip Saliba, Rice and Ødegaard entirely. That is the single biggest constraint on your remaining £63.2m.</p>
+              </div>
+
+              <div style="background:#E7F5FF;border-radius:10px;padding:16px 18px;display:flex;flex-direction:column;gap:8px">
+                <span style="font:600 13px Inter,sans-serif;color:#1971C2">What the fill will optimise</span>
+                <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">xPts over the next 5 gameweeks, weighted on minutes reliability, goal involvement, set-piece duty and fixture difficulty — then trimmed to fit budget and club caps.</span>
+              </div>
+
+              <button onClick="{{ step3 }}" style="height:42px;border:0;border-radius:10px;background:#1A1D23;color:#FFFFFF;font:600 14px Inter,sans-serif;cursor:pointer">Fill remaining 11 slots</button>
+            </sc-if>
+
+            <sc-if value="{{ isStep3 }}" hint-placeholder-val="{{ false }}">
+              <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:18px 20px;display:flex;flex-direction:column;gap:14px">
+                <div style="display:flex;align-items:baseline;justify-content:space-between">
+                  <span style="font:600 15px Inter,sans-serif">Auto-filled picks</span>
+                  <span style="font:400 13px Inter,sans-serif;color:#5F6672">11 slots</span>
+                </div>
+                <sc-for list="{{ pickFilled }}" as="b" hint-placeholder-count="11">
+                  <div style="display:flex;align-items:center;gap:10px;padding-bottom:11px;border-bottom:1px solid #F1F2F4">
+                    <div style="flex:1;display:flex;flex-direction:column;gap:2px">
+                      <span style="font:600 14px Inter,sans-serif">{{ b.n }}</span>
+                      <span style="font:400 11px Inter,sans-serif;color:#9BA1AB">{{ b.t }} · {{ b.pos }} · {{ b.price }}</span>
+                    </div>
+                    <span style="font:500 13px 'JetBrains Mono',monospace;color:#1B873B">{{ b.xpts }}</span>
+                    <span style="padding:4px 9px;border-radius:6px;background:#F4F5F7;font:500 11px Inter,sans-serif;color:#1971C2;cursor:pointer">Swap</span>
+                    <span style="padding:4px 9px;border-radius:6px;background:#F4F5F7;font:500 11px Inter,sans-serif;color:#5F6672;cursor:pointer">Lock</span>
+                  </div>
+                </sc-for>
+                <span style="font:400 11px/16px Inter,sans-serif;color:#9BA1AB">Locking an auto pick and refilling is the loop — each pass keeps what you liked and re-optimises the rest.</span>
+              </div>
+
+              <div style="display:flex;gap:10px">
+                <button onClick="{{ step1 }}" style="flex:1;height:42px;border:1px solid #E0E3E8;border-radius:10px;background:#FFFFFF;font:500 14px Inter,sans-serif;cursor:pointer">Edit locks</button>
+                <button style="flex:1;height:42px;border:0;border-radius:10px;background:#1A1D23;color:#FFFFFF;font:600 14px Inter,sans-serif;cursor:pointer">Save squad</button>
+              </div>
+            </sc-if>
+          </div>
+        </div>
+      </div>
+      </sc-if>
+    </div>
+    </sc-if>
+    <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Dashboard dark" style="background:#121417;min-height:100vh">
+      <header style="display:flex;align-items:center;justify-content:space-between;gap:24px;padding:20px 40px;background:#121417;border-bottom:1px solid #262A31;position:sticky;top:0;z-index:20">
+        <div style="display:flex;align-items:baseline;gap:12px">
+          <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em;color:#E8EAED">Gameweek 24</h1>
+          <span style="font:400 13px/18px Inter,sans-serif;color:#9BA1AB">Rowan Athletic · ID 4127883</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div style="display:flex;align-items:center;gap:8px;height:36px;padding:0 12px;background:#1E2127;border:1px solid #2E333B;border-radius:10px;min-width:240px">
+            <svg width="16" height="16" fill="none" stroke="#5F6672" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1.8" d="M21 21l-5-5m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">Search players, teams, fixtures</span>
+          </div>
+          <button style="height:36px;padding:0 14px;border:1px solid #2E333B;background:#1E2127;color:#E8EAED;border-radius:10px;font:500 13px Inter,sans-serif;cursor:pointer">Switch team</button>
+        </div>
+      </header>
+
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 56px;display:flex;flex-direction:column;gap:24px">
+        <section style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+          <div style="background:#1E2127;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px"><span style="font:500 13px Inter,sans-serif;color:#9BA1AB">Overall rank</span><span style="font:500 36px/42px 'JetBrains Mono',monospace;color:#E8EAED">142,308</span><span style="font:500 13px Inter,sans-serif;color:#4ADE80">▲ 18,442 places this GW</span><span style="font:400 11px Inter,sans-serif;color:#5F6672">Updated 2h ago</span></div>
+          <div style="background:#1E2127;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px"><span style="font:500 13px Inter,sans-serif;color:#9BA1AB">GW24 points</span><span style="font:500 36px/42px 'JetBrains Mono',monospace;color:#E8EAED">68</span><span style="font:500 13px Inter,sans-serif;color:#4ADE80">+17 vs gameweek average</span><span style="font:400 11px Inter,sans-serif;color:#5F6672">1 transfer · 0 pts hit</span></div>
+          <div style="background:#1E2127;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px"><span style="font:500 13px Inter,sans-serif;color:#9BA1AB">Squad value</span><span style="font:500 36px/42px 'JetBrains Mono',monospace;color:#E8EAED">£102.4m</span><span style="font:500 13px Inter,sans-serif;color:#4ADE80">+£2.4m since GW1</span><span style="font:400 11px Inter,sans-serif;color:#5F6672">2 risers held, 1 faller</span></div>
+          <div style="background:#1E2127;border-radius:10px;padding:20px;display:flex;flex-direction:column;gap:10px"><span style="font:500 13px Inter,sans-serif;color:#9BA1AB">Season total</span><span style="font:500 36px/42px 'JetBrains Mono',monospace;color:#E8EAED">1,384</span><span style="font:500 13px Inter,sans-serif;color:#9BA1AB">57.7 points per gameweek</span><span style="font:400 11px Inter,sans-serif;color:#5F6672">Top 3% of all managers</span></div>
+        </section>
+
+        <section style="display:grid;grid-template-columns:1.35fr 1fr;gap:24px;align-items:start">
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;color:#E8EAED">Captain shortlist</h2>
+            <div style="background:#1E2127;border-radius:14px;border-left:3px solid #4ADE80;padding:22px 24px;display:flex;flex-direction:column;gap:16px">
+              <div style="display:flex;align-items:center;gap:8px">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="#FBBF24"><path d="M5 17h14l1.5-9-5 3L12 5l-3.5 6-5-3z"></path></svg>
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#FBBF24;text-transform:uppercase">Captain pick — GW24</span>
+              </div>
+              <div style="display:flex;gap:20px;align-items:flex-start">
+                <div style="width:88px;height:104px;flex:none;border-radius:10px;background:repeating-linear-gradient(135deg,#262A31 0 6px,#1A1E24 6px 12px);display:flex;align-items:flex-end;justify-content:center;padding:8px"><span style="font:400 9px 'JetBrains Mono',monospace;color:#5F6672">player shot</span></div>
+                <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px">
+                  <span style="font:700 28px/34px Inter,sans-serif;letter-spacing:-.02em;color:#E8EAED">{{ cap1.full }}</span>
+                  <span style="font:400 15px/22px Inter,sans-serif;color:#9BA1AB">{{ cap1.team }} · {{ cap1.pos }} · {{ cap1.price }}</span>
+                  <div style="display:flex;gap:8px;margin-top:8px">
+                    <sc-for list="{{ capDarkFixtures }}" as="f" hint-placeholder-count="3">
+                      <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                        <div style="width:52px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 14px 'JetBrains Mono',monospace;background:{{ f.bg }};color:{{ f.fg }}">{{ f.d }}</div>
+                        <span style="font:500 10px Inter,sans-serif;color:#9BA1AB">{{ f.label }}</span>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="flex:none;text-align:right;display:flex;flex-direction:column;gap:2px"><span style="font:500 28px/34px 'JetBrains Mono',monospace;color:#4ADE80">{{ cap1.xpts }}</span><span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#9BA1AB;text-transform:uppercase">xPts</span></div>
+              </div>
+              <div style="display:flex;gap:28px;padding-top:14px;border-top:1px solid #2E333B">
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;color:#9BA1AB;text-transform:uppercase">Form</span><span style="font:500 15px 'JetBrains Mono',monospace;color:#4ADE80">{{ cap1.form }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;color:#9BA1AB;text-transform:uppercase">xG/90</span><span style="font:500 15px 'JetBrains Mono',monospace;color:#E8EAED">{{ cap1.xg }}</span></div>
+                <div style="display:flex;flex-direction:column;gap:2px"><span style="font:500 11px Inter,sans-serif;color:#9BA1AB;text-transform:uppercase">Owned</span><span style="font:500 15px 'JetBrains Mono',monospace;color:#E8EAED">{{ cap1.own }}</span></div>
+              </div>
+              <p style="margin:0;font:400 15px/22px Inter,sans-serif;color:#E8EAED;max-width:56ch">{{ cap1.why }}</p>
+            </div>
+            <div style="background:#1E2127;border-radius:10px;overflow:hidden">
+              <sc-for list="{{ capRestDark }}" as="c" hint-placeholder-count="3">
+                <div style="display:flex;align-items:center;gap:14px;padding:12px 20px;border-top:1px solid #262A31">
+                  <div style="width:170px;display:flex;flex-direction:column;gap:1px"><span style="font:600 15px/20px Inter,sans-serif;color:#E8EAED">{{ c.name }}</span><span style="font:400 11px/16px Inter,sans-serif;color:#9BA1AB">{{ c.short }} · {{ c.price }}</span></div>
+                  <div style="flex:1;display:flex;align-items:center;gap:10px"><div style="flex:1;height:6px;border-radius:3px;background:#2E333B;overflow:hidden"><div style="height:100%;border-radius:3px;background:#60A5FA;width:{{ c.score }}%"></div></div><span style="width:34px;text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#9BA1AB">{{ c.xpts }}</span></div>
+                  <div style="display:flex;gap:4px">
+                    <sc-for list="{{ c.fixtures }}" as="f" hint-placeholder-count="3">
+                      <div style="width:36px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 10px 'JetBrains Mono',monospace;background:{{ f.bg }};color:{{ f.fg }}">{{ f.opp }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;color:#E8EAED">Price watch</h2>
+            <div style="background:#1E2127;border-radius:10px;padding:18px 20px;display:flex;flex-direction:column;gap:12px">
+              <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#4ADE80;text-transform:uppercase">Likely risers</span>
+              <sc-for list="{{ risers }}" as="p" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:118px;display:flex;flex-direction:column;gap:1px"><span style="font:600 13px/18px Inter,sans-serif;color:#E8EAED">{{ p.name }}</span><span style="font:400 11px/14px Inter,sans-serif;color:#5F6672">{{ p.team }} · {{ p.price }}</span></div>
+                  <span style="flex:1;font:500 12px 'JetBrains Mono',monospace;color:#4ADE80">{{ p.net }}</span>
+                  <div style="width:56px;height:6px;border-radius:3px;background:#2E333B;overflow:hidden"><div style="height:100%;border-radius:3px;background:#4ADE80;width:{{ p.conf }}%"></div></div>
+                </div>
+              </sc-for>
+              <div style="height:1px;background:#2E333B;margin:4px 0"></div>
+              <span style="font:500 11px Inter,sans-serif;letter-spacing:.09em;color:#F87171;text-transform:uppercase">Likely fallers</span>
+              <sc-for list="{{ fallers }}" as="p" hint-placeholder-count="5">
+                <div style="display:flex;align-items:center;gap:12px">
+                  <div style="width:118px;display:flex;flex-direction:column;gap:1px"><span style="font:600 13px/18px Inter,sans-serif;color:#E8EAED">{{ p.name }}</span><span style="font:400 11px/14px Inter,sans-serif;color:#5F6672">{{ p.team }} · {{ p.price }}</span></div>
+                  <span style="flex:1;font:500 12px 'JetBrains Mono',monospace;color:#F87171">{{ p.net }}</span>
+                  <div style="width:56px;height:6px;border-radius:3px;background:#2E333B;overflow:hidden"><div style="height:100%;border-radius:3px;background:#F87171;width:{{ p.conf }}%"></div></div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:14px">
+          <h2 style="margin:0;font:600 18px/26px Inter,sans-serif;color:#E8EAED">Fixture difficulty — next 6</h2>
+          <div style="background:#1E2127;border-radius:10px;overflow:hidden">
+            <div style="display:grid;grid-template-columns:88px repeat(6,1fr) 72px;background:#0D0F12;padding:10px 20px">
+              <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#9BA1AB;text-transform:uppercase">Team</span>
+              <sc-for list="{{ gwHeader }}" as="g" hint-placeholder-count="6">
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#9BA1AB;text-transform:uppercase;text-align:center">{{ g }}</span>
+              </sc-for>
+              <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#9BA1AB;text-transform:uppercase;text-align:right">Avg</span>
+            </div>
+            <sc-for list="{{ tickerDark }}" as="r" hint-placeholder-count="8">
+              <div style="display:grid;grid-template-columns:88px repeat(6,1fr) 72px;align-items:center;padding:5px 20px;border-top:1px solid #262A31">
+                <span style="font:600 13px Inter,sans-serif;color:#E8EAED">{{ r.team }}</span>
+                <sc-for list="{{ r.cells }}" as="f" hint-placeholder-count="6">
+                  <div style="margin:0 auto;width:62px;height:34px;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;background:{{ f.bg }};color:{{ f.fg }}">
+                    <span style="font:500 11px/12px 'JetBrains Mono',monospace">{{ f.opp }}</span>
+                    <span style="font:400 9px/10px Inter,sans-serif;opacity:.8">{{ f.ha }} · {{ f.d }}</span>
+                  </div>
+                </sc-for>
+                <span style="text-align:right;font:500 13px 'JetBrains Mono',monospace;color:#9BA1AB">{{ r.avg }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isMobile }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Mobile">
+      <header style="display:flex;align-items:baseline;gap:12px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8">
+        <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Mobile</h1>
+        <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">390 × 844 · bottom-sheet nav, cards replace tables, ticker snaps horizontally</span>
+      </header>
+      <div style="padding:36px 40px 56px;display:flex;gap:32px;flex-wrap:wrap">
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Dashboard</span>
+          <div style="width:390px;height:800px;border-radius:36px;background:#1A1D23;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.14)">
+            <div style="width:100%;height:100%;border-radius:28px;background:#F4F5F7;overflow:hidden;display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px 6px"><span style="font:600 12px 'JetBrains Mono',monospace">9:41</span><div style="width:56px;height:6px;border-radius:3px;background:#1A1D23;opacity:.85"></div></div>
+              <div style="padding:8px 16px 12px;display:flex;align-items:baseline;justify-content:space-between"><span style="font:700 20px Inter,sans-serif;letter-spacing:-.02em">GW24</span><span style="font:400 12px Inter,sans-serif;color:#5F6672">3d 14h left</span></div>
+              <div style="flex:1;overflow:hidden;padding:0 16px;display:flex;flex-direction:column;gap:12px">
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+                  <div style="background:#FFFFFF;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:4px"><span style="font:500 11px Inter,sans-serif;color:#5F6672">Rank</span><span style="font:500 22px 'JetBrains Mono',monospace">142,308</span><span style="font:500 11px Inter,sans-serif;color:#1B873B">▲ 18,442</span></div>
+                  <div style="background:#FFFFFF;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:4px"><span style="font:500 11px Inter,sans-serif;color:#5F6672">GW pts</span><span style="font:500 22px 'JetBrains Mono',monospace">68</span><span style="font:500 11px Inter,sans-serif;color:#1B873B">+17 vs avg</span></div>
+                </div>
+                <div style="background:#FFFFFF;border-radius:12px;border-left:3px solid #1B873B;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:8px">
+                  <span style="font:500 10px Inter,sans-serif;letter-spacing:.09em;color:#BF8700;text-transform:uppercase">Captain pick</span>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between"><span style="font:700 20px Inter,sans-serif;letter-spacing:-.02em">Haaland</span><span style="font:500 20px 'JetBrains Mono',monospace;color:#1B873B">9.4</span></div>
+                  <span style="font:400 12px Inter,sans-serif;color:#5F6672">Man City · FWD · £14.2m · vs BOU (H)</span>
+                  <div style="display:flex;gap:6px">
+                    <sc-for list="{{ cap1.fixtures }}" as="f" hint-placeholder-count="3">
+                      <div style="flex:1;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;font:500 13px 'JetBrains Mono',monospace;background:{{ f.bg }};color:{{ f.fg }}">{{ f.opp }} · {{ f.d }}</div>
+                    </sc-for>
+                  </div>
+                </div>
+                <div style="background:#FFF0EE;border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:3px"><span style="font:600 12px Inter,sans-serif;color:#CF222E">2 squad players flagged</span><span style="font:400 12px/16px Inter,sans-serif;color:#5F6672">Rashford — knock. Muñoz — suspended.</span></div>
+                <div style="background:#FFFFFF;border-radius:10px;padding:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:9px">
+                  <span style="font:500 10px Inter,sans-serif;letter-spacing:.09em;color:#1B873B;text-transform:uppercase">Likely risers</span>
+                  <sc-for list="{{ risers }}" as="p" hint-placeholder-count="3">
+                    <div style="display:flex;align-items:center;gap:10px"><span style="flex:1;font:600 13px Inter,sans-serif">{{ p.name }}</span><span style="font:400 11px Inter,sans-serif;color:#9BA1AB">{{ p.team }}</span><span style="font:500 12px 'JetBrains Mono',monospace;color:#1B873B">{{ p.conf }}%</span></div>
+                  </sc-for>
+                </div>
+              </div>
+              <div style="display:flex;padding:8px 8px 18px;background:#FFFFFF;border-top:1px solid #E0E3E8">
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0;border-radius:8px;background:#E7F5FF"><svg width="20" height="20" fill="none" stroke="#1971C2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg><span style="font:500 10px Inter,sans-serif;color:#1971C2">Home</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0"><svg width="20" height="20" fill="none" stroke="#9BA1AB" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1.5" d="M21 21l-5-5m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span style="font:500 10px Inter,sans-serif;color:#9BA1AB">Players</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0"><svg width="20" height="20" fill="none" stroke="#9BA1AB" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"></path></svg><span style="font:500 10px Inter,sans-serif;color:#9BA1AB">Transfers</span></div>
+                <div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 0"><svg width="20" height="20" fill="none" stroke="#9BA1AB" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M11 3l2.5 6H20l-5 4 2 6-6-4-6 4 2-6-5-4h6.5z"></path></svg><span style="font:500 10px Inter,sans-serif;color:#9BA1AB">Captain</span></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Player Explorer — card list</span>
+          <div style="width:390px;height:800px;border-radius:36px;background:#1A1D23;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.14)">
+            <div style="width:100%;height:100%;border-radius:28px;background:#F4F5F7;overflow:hidden;display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px 6px"><span style="font:600 12px 'JetBrains Mono',monospace">9:41</span><div style="width:56px;height:6px;border-radius:3px;background:#1A1D23;opacity:.85"></div></div>
+              <div style="padding:8px 16px 10px;display:flex;flex-direction:column;gap:10px">
+                <span style="font:700 20px Inter,sans-serif;letter-spacing:-.02em">Players</span>
+                <div style="display:flex;align-items:center;gap:8px;height:34px;padding:0 12px;background:#FFFFFF;border:1px solid #E0E3E8;border-radius:9px"><svg width="15" height="15" fill="none" stroke="#9BA1AB" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1.8" d="M21 21l-5-5m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg><span style="font:400 13px Inter,sans-serif;color:#9BA1AB">Search by name</span></div>
+                <div style="display:flex;gap:6px;overflow:hidden">
+                  <span style="padding:5px 12px;border-radius:6px;background:#D0EBFF;color:#1971C2;font:500 12px Inter,sans-serif">All</span>
+                  <span style="padding:5px 12px;border-radius:6px;background:#FFFFFF;border:1px solid #E0E3E8;color:#5F6672;font:500 12px Inter,sans-serif">GKP</span>
+                  <span style="padding:5px 12px;border-radius:6px;background:#FFFFFF;border:1px solid #E0E3E8;color:#5F6672;font:500 12px Inter,sans-serif">DEF</span>
+                  <span style="padding:5px 12px;border-radius:6px;background:#FFFFFF;border:1px solid #E0E3E8;color:#5F6672;font:500 12px Inter,sans-serif">MID</span>
+                  <span style="padding:5px 12px;border-radius:6px;background:#FFFFFF;border:1px solid #E0E3E8;color:#5F6672;font:500 12px Inter,sans-serif">FWD</span>
+                </div>
+              </div>
+              <div style="flex:1;overflow:hidden;padding:0 16px;display:flex;flex-direction:column;gap:8px">
+                <sc-for list="{{ players }}" as="p" hint-placeholder-count="6">
+                  <div style="background:#FFFFFF;border-radius:10px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:9px">
+                    <div style="display:flex;align-items:center;gap:8px">
+                      <span style="padding:2px 6px;border-radius:5px;font:500 10px Inter,sans-serif;background:{{ p.posBg }};color:{{ p.posFg }}">{{ p.pos }}</span>
+                      <span style="font:600 15px Inter,sans-serif">{{ p.name }}</span>
+                      <span style="font:400 11px Inter,sans-serif;color:#9BA1AB">{{ p.team }}</span>
+                      <span style="flex:1"></span>
+                      <span style="font:700 15px 'JetBrains Mono',monospace">{{ p.pts }}</span>
+                    </div>
+                    <div style="display:flex;align-items:center;gap:14px">
+                      <span style="font:400 11px Inter,sans-serif;color:#5F6672">{{ p.price }}</span>
+                      <span style="font:400 11px Inter,sans-serif;color:#5F6672">form <span style="font:500 11px 'JetBrains Mono',monospace;color:{{ p.formColor }}">{{ p.form }}</span></span>
+                      <span style="font:400 11px Inter,sans-serif;color:#5F6672">own {{ p.sel }}</span>
+                      <span style="flex:1"></span>
+                      <div style="display:flex;gap:3px">
+                        <sc-for list="{{ p.next }}" as="f" hint-placeholder-count="5">
+                          <div style="width:20px;height:20px;border-radius:4px;display:flex;align-items:center;justify-content:center;font:500 10px 'JetBrains Mono',monospace;background:{{ f.bg }};color:{{ f.fg }}">{{ f.d }}</div>
+                        </sc-for>
+                      </div>
+                    </div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Team Analyser — pitch</span>
+          <div style="width:390px;height:800px;border-radius:36px;background:#1A1D23;padding:10px;box-shadow:0 8px 24px rgba(0,0,0,.14)">
+            <div style="width:100%;height:100%;border-radius:28px;background:#F4F5F7;overflow:hidden;display:flex;flex-direction:column">
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 20px 6px"><span style="font:600 12px 'JetBrains Mono',monospace">9:41</span><div style="width:56px;height:6px;border-radius:3px;background:#1A1D23;opacity:.85"></div></div>
+              <div style="padding:8px 16px 10px;display:flex;flex-direction:column;gap:2px"><span style="font:700 20px Inter,sans-serif;letter-spacing:-.02em">Rowan Athletic</span><span style="font:400 12px Inter,sans-serif;color:#5F6672">68 pts · rank 142,308</span></div>
+              <div style="flex:1;overflow:hidden;padding:0 16px;display:flex;flex-direction:column;gap:12px">
+                <div style="border-radius:10px;padding:16px 8px;display:flex;flex-direction:column-reverse;gap:14px;background:#2D8A4E;background-image:repeating-linear-gradient(90deg,rgba(255,255,255,.07) 0 30px,transparent 30px 60px)">
+                  <sc-for list="{{ squad }}" as="row" hint-placeholder-count="4">
+                    <div style="display:flex;justify-content:center;gap:8px">
+                      <sc-for list="{{ row.players }}" as="pl" hint-placeholder-count="3">
+                        <div style="display:flex;flex-direction:column;align-items:center;gap:3px;width:60px">
+                          <div style="width:38px;height:38px;border-radius:50%;background:#FFFFFF;border:2.5px solid {{ pl.ring }};display:flex;align-items:center;justify-content:center"><span style="font:500 12px 'JetBrains Mono',monospace">{{ pl.pts }}</span></div>
+                          <span style="font:600 10px/12px Inter,sans-serif;color:#FFFFFF;text-align:center">{{ pl.n }}</span>
+                        </div>
+                      </sc-for>
+                    </div>
+                  </sc-for>
+                </div>
+                <sc-for list="{{ weaknesses }}" as="w" hint-placeholder-count="3">
+                  <div style="border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;background:{{ w.bg }}">
+                    <span style="font:600 13px/17px Inter,sans-serif;color:{{ w.fg }}">{{ w.title }}</span>
+                    <span style="font:400 12px/16px Inter,sans-serif;color:#5F6672">{{ w.body }}</span>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isStates }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Empty and loading states">
+      <header style="display:flex;align-items:baseline;gap:12px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8">
+        <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Empty &amp; loading states</h1>
+        <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">Five states, in the order a manager meets them</span>
+      </header>
+
+      <div style="max-width:1280px;margin:0 auto;padding:28px 40px 64px;display:flex;flex-direction:column;gap:36px">
+
+        <section style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <span style="font:500 11px 'JetBrains Mono',monospace;padding:2px 7px;border-radius:5px;background:#1A1D23;color:#FFFFFF">01</span>
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">First run — no team connected</h2>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">Team Analyser, Transfer Hub, Captain &amp; Chips</span>
+          </div>
+          <div style="background:#F4F5F7;border:1px solid #E0E3E8;border-radius:12px;padding:56px 40px;display:flex;justify-content:center">
+            <div style="width:460px;background:#FFFFFF;border-radius:14px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:32px;display:flex;flex-direction:column;gap:18px">
+              <div style="width:44px;height:44px;border-radius:12px;background:#E7F5FF;display:flex;align-items:center;justify-content:center">
+                <svg width="22" height="22" fill="none" stroke="#1971C2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:6px">
+                <span style="font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Connect your FPL team</span>
+                <span style="font:400 15px/22px Inter,sans-serif;color:#5F6672">Everything on this page is personalised to your squad — weaknesses, transfer targets, chip timing. Paste your team ID once and it's remembered.</span>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:8px">
+                <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Team ID</span>
+                <div style="display:flex;gap:8px">
+                  <div style="flex:1;height:44px;display:flex;align-items:center;padding:0 14px;border:1px solid #C4C9D1;border-radius:10px"><span style="font:400 15px 'JetBrains Mono',monospace;color:#9BA1AB">e.g. 4127883</span></div>
+                  <button style="height:44px;padding:0 20px;border:0;border-radius:10px;background:#1A1D23;color:#FFFFFF;font:600 14px Inter,sans-serif;cursor:pointer">Connect</button>
+                </div>
+              </div>
+              <div style="padding:14px 16px;border-radius:10px;background:#F4F5F7;display:flex;flex-direction:column;gap:5px">
+                <span style="font:500 13px Inter,sans-serif">Where to find it</span>
+                <span style="font:400 13px/19px Inter,sans-serif;color:#5F6672">Open the official site, go to <em>Points</em>, and copy the number in the URL after <code style="font:500 12px 'JetBrains Mono',monospace;background:#EBEDF0;padding:1px 5px;border-radius:4px">/entry/</code>.</span>
+              </div>
+              <a href="#" style="font:500 14px Inter,sans-serif;color:#1971C2">Browse without a team →</a>
+            </div>
+          </div>
+          <p style="margin:0;font:400 13px/19px Inter,sans-serif;color:#5F6672;max-width:78ch">One card, one job. The "browse without a team" escape hatch matters — the Dashboard, Player Explorer and FDR ticker all work fine with no ID, and blocking the whole product behind an input would be wrong.</p>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <span style="font:500 11px 'JetBrains Mono',monospace;padding:2px 7px;border-radius:5px;background:#1A1D23;color:#FFFFFF">02</span>
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">Loading — skeleton, pulse not sweep</h2>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">Dashboard, first paint</span>
+          </div>
+          <div style="background:#F4F5F7;border:1px solid #E0E3E8;border-radius:12px;padding:28px;display:flex;flex-direction:column;gap:22px">
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px">
+              <sc-for list="{{ skelCards }}" as="c" hint-placeholder-count="4">
+                <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:12px;animation:omPulse 1.6s ease-in-out infinite">
+                  <div style="width:56%;height:11px;border-radius:4px;background:#EBEDF0"></div>
+                  <div style="width:78%;height:30px;border-radius:6px;background:#E4E7EB"></div>
+                  <div style="width:44%;height:11px;border-radius:4px;background:#EBEDF0"></div>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:grid;grid-template-columns:1.35fr 1fr;gap:24px;align-items:start">
+              <div style="background:#FFFFFF;border-radius:14px;border-left:3px solid #E0E3E8;padding:22px 24px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;gap:20px;animation:omPulse 1.6s ease-in-out infinite">
+                <div style="width:88px;height:104px;border-radius:10px;background:#EBEDF0;flex:none"></div>
+                <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+                  <div style="width:52%;height:26px;border-radius:6px;background:#E4E7EB"></div>
+                  <div style="width:38%;height:13px;border-radius:4px;background:#EBEDF0"></div>
+                  <div style="display:flex;gap:8px;margin-top:8px">
+                    <div style="width:52px;height:36px;border-radius:6px;background:#EBEDF0"></div>
+                    <div style="width:52px;height:36px;border-radius:6px;background:#EBEDF0"></div>
+                    <div style="width:52px;height:36px;border-radius:6px;background:#EBEDF0"></div>
+                  </div>
+                </div>
+                <div style="width:56px;height:34px;border-radius:6px;background:#EBEDF0;flex:none"></div>
+              </div>
+              <div style="background:#FFFFFF;border-radius:10px;padding:18px 20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:13px">
+                <sc-for list="{{ skelRows }}" as="r" hint-placeholder-count="8">
+                  <div style="display:flex;align-items:center;gap:12px;animation:omPulse 1.6s ease-in-out infinite;animation-delay:{{ r.delay }}">
+                    <div style="height:11px;border-radius:4px;background:#EBEDF0;width:{{ r.w }}"></div>
+                    <div style="flex:1"></div>
+                    <div style="width:44px;height:11px;border-radius:4px;background:#EBEDF0"></div>
+                  </div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <p style="margin:0;font:400 13px/19px Inter,sans-serif;color:#5F6672;max-width:78ch">Skeletons mirror the real layout so nothing jumps when data lands, and they pulse in place rather than sweeping a highlight across — a shimmer reads as consumer app, a pulse reads as "still fetching". Rows stagger by 80ms. Under <code style="font:500 12px 'JetBrains Mono',monospace;background:#EBEDF0;padding:1px 5px;border-radius:4px">prefers-reduced-motion</code> the animation drops and the grey blocks simply hold.</p>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <span style="font:500 11px 'JetBrains Mono',monospace;padding:2px 7px;border-radius:5px;background:#1A1D23;color:#FFFFFF">03</span>
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">No results — filters too tight</h2>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">Player Explorer</span>
+          </div>
+          <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);overflow:hidden">
+            <div style="display:flex;align-items:center;gap:10px;padding:14px 20px;background:#EBEDF0;flex-wrap:wrap">
+              <span style="font:500 11px Inter,sans-serif;letter-spacing:.06em;color:#5F6672;text-transform:uppercase">Active filters</span>
+              <span style="display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;background:#D0EBFF;font:500 12px Inter,sans-serif;color:#1971C2">GKP <span style="opacity:.6">×</span></span>
+              <span style="display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;background:#D0EBFF;font:500 12px Inter,sans-serif;color:#1971C2">Under £4.5m <span style="opacity:.6">×</span></span>
+              <span style="display:flex;align-items:center;gap:6px;padding:4px 10px;border-radius:6px;background:#D0EBFF;font:500 12px Inter,sans-serif;color:#1971C2">Form 6+ <span style="opacity:.6">×</span></span>
+              <span style="flex:1"></span>
+              <span style="font:500 13px Inter,sans-serif;color:#1971C2;cursor:pointer">Reset all</span>
+            </div>
+            <div style="padding:56px 40px;display:flex;flex-direction:column;align-items:center;gap:14px">
+              <div style="width:40px;height:40px;border-radius:10px;background:#F4F5F7;display:flex;align-items:center;justify-content:center">
+                <svg width="20" height="20" fill="none" stroke="#9BA1AB" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-width="1.7" d="M21 21l-5-5m2-5a7 7 0 11-14 0 7 7 0 0114 0zM9 11h6"></path></svg>
+              </div>
+              <span style="font:600 18px/26px Inter,sans-serif">No goalkeeper matches all three filters</span>
+              <span style="font:400 15px/22px Inter,sans-serif;color:#5F6672;max-width:46ch;text-align:center">The cheapest keeper with form above 6.0 is <strong style="font-weight:600">Sels at £4.9m</strong>. Relax the price ceiling and you get 4 results.</span>
+              <div style="display:flex;gap:8px;margin-top:4px">
+                <button style="height:36px;padding:0 16px;border:0;border-radius:8px;background:#1A1D23;color:#FFFFFF;font:500 13px Inter,sans-serif;cursor:pointer">Raise price to £5.0m</button>
+                <button style="height:36px;padding:0 16px;border:1px solid #E0E3E8;border-radius:8px;background:#FFFFFF;font:500 13px Inter,sans-serif;cursor:pointer">Clear form filter</button>
+              </div>
+            </div>
+          </div>
+          <p style="margin:0;font:400 13px/19px Inter,sans-serif;color:#5F6672;max-width:78ch">An empty table should name the filter that emptied it and offer the single loosening that fixes it. "No players match your filters" makes the user do the diagnosis themselves.</p>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <span style="font:500 11px 'JetBrains Mono',monospace;padding:2px 7px;border-radius:5px;background:#1A1D23;color:#FFFFFF">04</span>
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">Upstream failure — stale but usable</h2>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">Any screen</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:14px">
+            <div style="background:#FFF0EE;border-radius:10px;padding:16px 18px;display:flex;gap:12px;align-items:flex-start">
+              <svg width="18" height="18" fill="none" stroke="#CF222E" viewBox="0 0 24 24" style="flex:none;margin-top:2px"><circle cx="12" cy="12" r="9" stroke-width="1.6"></circle><path d="M12 8v5M12 16h.01" stroke-width="1.8" stroke-linecap="round"></path></svg>
+              <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+                <span style="font:600 15px/21px Inter,sans-serif;color:#CF222E">The FPL API isn't responding</span>
+                <span style="font:400 13px/19px Inter,sans-serif;color:#5F6672">Showing data cached at <span style="font:500 13px 'JetBrains Mono',monospace">09:12</span>, about 2 hours old. Prices and injury news may have moved since. Retried twice automatically.</span>
+              </div>
+              <button style="flex:none;height:34px;padding:0 14px;border:1px solid #F1C0BD;border-radius:8px;background:#FFFFFF;font:500 13px Inter,sans-serif;color:#CF222E;cursor:pointer">Retry now</button>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;opacity:.6">
+              <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px"><span style="font:500 13px Inter,sans-serif;color:#5F6672">Overall rank</span><span style="font:500 36px/42px 'JetBrains Mono',monospace">142,308</span><span style="font:400 11px Inter,sans-serif;color:#9BA1AB">Cached 09:12</span></div>
+              <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px"><span style="font:500 13px Inter,sans-serif;color:#5F6672">GW24 points</span><span style="font:500 36px/42px 'JetBrains Mono',monospace">68</span><span style="font:400 11px Inter,sans-serif;color:#9BA1AB">Cached 09:12</span></div>
+              <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px"><span style="font:500 13px Inter,sans-serif;color:#5F6672">Squad value</span><span style="font:500 36px/42px 'JetBrains Mono',monospace">£102.4m</span><span style="font:400 11px Inter,sans-serif;color:#9BA1AB">Cached 09:12</span></div>
+              <div style="background:#FFFFFF;border-radius:10px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.08);display:flex;flex-direction:column;gap:10px;background:#F4F5F7"><span style="font:500 13px Inter,sans-serif;color:#5F6672">Price watch</span><span style="font:500 18px/42px Inter,sans-serif;color:#9BA1AB">Unavailable</span><span style="font:400 11px Inter,sans-serif;color:#9BA1AB">Needs live transfer data</span></div>
+            </div>
+          </div>
+          <p style="margin:0;font:400 13px/19px Inter,sans-serif;color:#5F6672;max-width:78ch">A full-page error throws away good cached data. Instead: banner at the top, cached figures dimmed with a timestamp, and only the panels that genuinely need live data marked unavailable. Price watch is the one thing you must never show stale.</p>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <span style="font:500 11px 'JetBrains Mono',monospace;padding:2px 7px;border-radius:5px;background:#1A1D23;color:#FFFFFF">05</span>
+            <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">Pre-season — the season hasn't started</h2>
+            <span style="font:400 13px Inter,sans-serif;color:#5F6672">Dashboard, Captain &amp; Chips</span>
+          </div>
+          <div style="background:#FFFFFF;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,.08);padding:22px 24px;display:flex;flex-direction:column;gap:18px">
+            <div style="display:flex;align-items:flex-start;gap:14px">
+              <div style="width:38px;height:38px;border-radius:10px;background:#FFF4CC;display:flex;align-items:center;justify-content:center;flex:none"><svg width="19" height="19" fill="none" stroke="#BF8700" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" stroke-width="1.6"></circle><path d="M12 8v4.5l3 2" stroke-width="1.7" stroke-linecap="round"></path></svg></div>
+              <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+                <span style="font:600 18px/25px Inter,sans-serif">No gameweek has been played yet</span>
+                <span style="font:400 15px/22px Inter,sans-serif;color:#5F6672">Form, ICT and xG are all empty until GW1. Everything below is built from last season's finishing numbers and the new fixture list — treat it as a shortlist, not a projection.</span>
+              </div>
+              <div style="flex:none;text-align:right;display:flex;flex-direction:column;gap:2px"><span style="font:500 22px 'JetBrains Mono',monospace">11d 04h</span><span style="font:500 11px Inter,sans-serif;letter-spacing:.05em;color:#5F6672;text-transform:uppercase">To GW1 deadline</span></div>
+            </div>
+            <div style="display:flex;gap:6px">
+              <sc-for list="{{ skelTicker }}" as="t" hint-placeholder-count="6">
+                <div style="flex:1;height:64px;border-radius:8px;border:1px dashed #C4C9D1;background:#FAFBFC;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px">
+                  <span style="font:500 13px 'JetBrains Mono',monospace;color:#9BA1AB">GW{{ t }}</span>
+                  <span style="font:400 10px Inter,sans-serif;letter-spacing:.05em;color:#C4C9D1;text-transform:uppercase">not played</span>
+                </div>
+              </sc-for>
+            </div>
+            <div style="display:flex;gap:10px">
+              <button style="height:38px;padding:0 16px;border:0;border-radius:9px;background:#1A1D23;color:#FFFFFF;font:500 13px Inter,sans-serif;cursor:pointer">Open Squad Builder</button>
+              <button style="height:38px;padding:0 16px;border:1px solid #E0E3E8;border-radius:9px;background:#FFFFFF;font:500 13px Inter,sans-serif;cursor:pointer">View fixture ticker</button>
+            </div>
+          </div>
+          <p style="margin:0;font:400 13px/19px Inter,sans-serif;color:#5F6672;max-width:78ch">Pre-season is an empty state with real work available in it, so it ends in actions — build a squad, study fixtures — rather than a shrug. The honesty line about last-season data is doing the heavy lifting.</p>
+        </section>
+      </div>
+    </div>
+    </sc-if>
+
+    <sc-if value="{{ isNotes }}" hint-placeholder-val="{{ false }}">
+    <div data-screen-label="Design notes">
+      <header style="display:flex;align-items:baseline;gap:12px;padding:20px 40px;background:#F4F5F7;border-bottom:1px solid #E0E3E8">
+        <h1 style="margin:0;font:700 22px/28px Inter,sans-serif;letter-spacing:-.02em">Design notes</h1>
+        <span style="font:400 13px/18px Inter,sans-serif;color:#5F6672">Assumptions, decisions, and what I'd do next</span>
+      </header>
+      <div style="max-width:820px;padding:32px 40px 64px;display:flex;flex-direction:column;gap:28px">
+
+        <section style="display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">What I worked from</h2>
+          <p style="margin:0;font:400 15px/24px Inter,sans-serif;color:#5F6672">Every screen is a redesign of a real page in your Next.js app — Dashboard, Player Explorer, Team Analyser, Transfer Hub, Captain &amp; Chips and Squad Builder. Content, metrics, column sets and the algorithm outputs (captain score, xPts, FDR runs, price confidence, differentials, "why this pick" breakdowns) all come from your existing pages and <code style="font:500 13px 'JetBrains Mono',monospace;background:#EBEDF0;padding:1px 5px;border-radius:4px">lib/algorithms.ts</code>. The visual system comes from FPL_HUB_DESIGN.md.</p>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">Where I pushed past the spec</h2>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08)"><span style="font:600 15px Inter,sans-serif">FDR cells carry the opponent, not just a number</span><p style="margin:5px 0 0;font:400 14px/21px Inter,sans-serif;color:#5F6672">The spec's 36×36 numeric cell reads fast but loses the fixture. Wider cells hold opponent + H/A + rating, which is the question managers actually ask.</p></div>
+            <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08)"><span style="font:600 15px Inter,sans-serif">Sidebar is one level, no collapse</span><p style="margin:5px 0 0;font:400 14px/21px Inter,sans-serif;color:#5F6672">Six destinations don't need a 256→64px collapse. The space went to a persistent deadline countdown instead, which is the most time-sensitive thing in the product.</p></div>
+            <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08)"><span style="font:600 15px Inter,sans-serif">Every score is paired with a sentence</span><p style="margin:5px 0 0;font:400 14px/21px Inter,sans-serif;color:#5F6672">Your audience is layered — casual managers want the call, serious ones want the data. So headline advice reads in plain English, and the bars/numbers sit underneath it rather than instead of it.</p></div>
+            <div style="background:#FFFFFF;border-radius:10px;padding:16px 18px;box-shadow:0 1px 3px rgba(0,0,0,.08)"><span style="font:600 15px Inter,sans-serif">Charts use flat viz colours, never semantic ones</span><p style="margin:5px 0 0;font:400 14px/21px Inter,sans-serif;color:#5F6672">Steel/Tangerine/Mauve for series; green and red are reserved so that when they appear they always mean good and bad. The one exception is the GW-points bar chart, where colour <em>is</em> the judgement.</p></div>
+          </div>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">Assumptions to confirm</h2>
+          <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px">
+            <li style="font:400 15px/23px Inter,sans-serif;color:#5F6672">All figures are plausible placeholders for a mid-season GW24 — swap in your real API sample and the layouts hold.</li>
+            <li style="font:400 15px/23px Inter,sans-serif;color:#5F6672">Team badges and player photos are marked as placeholders; I haven't drawn crests.</li>
+            <li style="font:400 15px/23px Inter,sans-serif;color:#5F6672">A team ID is assumed connected. The empty state (no ID yet) isn't drawn yet.</li>
+            <li style="font:400 15px/23px Inter,sans-serif;color:#5F6672">Dark mode is shown on the Dashboard only, using the token inversion from §10 of the spec.</li>
+          </ul>
+        </section>
+
+        <section style="display:flex;flex-direction:column;gap:10px">
+          <h2 style="margin:0;font:600 18px/26px Inter,sans-serif">Next steps</h2>
+          <ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px">
+            <li style="font:400 15px/23px Inter,sans-serif;color:#5F6672">Toast/inline patterns for optimistic actions (locking a pick, saving a squad).</li>
+            <li style="font:400 15px/23px Inter,sans-serif;color:#5F6672">Player compare mode — 2–3 players side by side, shared axes.</li>
+            <li style="font:400 15px/23px Inter,sans-serif;color:#5F6672">Squad Builder: real drag-to-swap on the pitch, and a saved-squad library.</li>
+            <li style="font:400 15px/23px Inter,sans-serif;color:#5F6672">A tokens file mapping this palette into your <code style="font:500 13px 'JetBrains Mono',monospace;background:#EBEDF0;padding:1px 5px;border-radius:4px">tailwind.config.ts</code>.</li>
+          </ul>
+        </section>
+      </div>
+    </div>
+    </sc-if>
+  </main>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:960},&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;dashboard&quot;,&quot;players&quot;,&quot;team&quot;,&quot;transfers&quot;,&quot;captain&quot;,&quot;squad&quot;,&quot;dark&quot;,&quot;mobile&quot;,&quot;states&quot;,&quot;notes&quot;],&quot;default&quot;:&quot;dashboard&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;View&quot;},&quot;tickerRows&quot;:{&quot;editor&quot;:&quot;int&quot;,&quot;default&quot;:20,&quot;min&quot;:5,&quot;max&quot;:20,&quot;step&quot;:1,&quot;tsType&quot;:&quot;number&quot;,&quot;section&quot;:&quot;View&quot;}}">
+const FDR = {
+  1: { bg: '#DAFBE1', fg: '#1B873B' },
+  2: { bg: '#C3F7CB', fg: '#1B873B' },
+  3: { bg: '#FFF4CC', fg: '#BF8700' },
+  4: { bg: '#FFCECB', fg: '#CF222E' },
+  5: { bg: '#F8B4B4', fg: '#9E1B1B' },
+};
+const TEAMS = ['ARS','AVL','BOU','BRE','BRI','CHE','CRY','EVE','FUL','IPS','LEI','LIV','MCI','MUN','NEW','NFO','SOU','TOT','WHU','WOL'];
+
+function fx(d, opp, home, gw) {
+  return { d: d, opp: opp, home: home, gw: gw, ha: home ? 'H' : 'A', bg: FDR[d].bg, fg: FDR[d].fg, label: opp + (home ? ' (H)' : ' (A)') };
+}
+
+class Component extends DCLogic {
+  state = { screen: this.props.startScreen || 'dashboard', builder: 'auto', step: 1 };
+
+  nav(key) {
+    const on = this.state.screen === key;
+    return { bg: on ? '#E7F5FF' : 'transparent', fg: on ? '#1971C2' : '#5F6672' };
+  }
+
+  renderVals() {
+    const s = this.state.screen;
+    const go = (k) => () => this.setState({ screen: k });
+
+    const ticker = TEAMS.map((t, i) => {
+      const cells = [];
+      let sum = 0;
+      for (let j = 0; j < 6; j++) {
+        const d = 1 + ((i * 7 + j * 5 + (i % 3) * 2) % 5);
+        sum += d;
+        cells.push(fx(d, TEAMS[(i + j * 3 + 4) % 20], (i + j) % 2 === 0, 24 + j));
+      }
+      const avg = sum / 6;
+      return { team: t, cells: cells, avg: avg.toFixed(2), avgColor: avg < 2.6 ? '#1B873B' : avg > 3.4 ? '#CF222E' : '#5F6672' };
+    }).slice(0, this.props.tickerRows ?? 20);
+
+    const captains = [
+      { rank: '1', name: 'Haaland', full: 'Erling Haaland', team: 'Man City', short: 'MCI', pos: 'FWD', price: '£14.2m', xpts: '9.4', score: 94, form: '8.4', xg: '0.81', own: '85.2%', ppg: '7.1', pts: '178',
+        fixtures: [fx(2, 'BOU', true, 24), fx(3, 'NFO', false, 25), fx(2, 'SOU', true, 26)],
+        why: 'Highest ceiling pick this week. Home fixture, on penalties, and a double-digit haul in 3 of the last 5.' },
+      { rank: '2', name: 'Saka', full: 'Bukayo Saka', team: 'Arsenal', short: 'ARS', pos: 'MID', price: '£10.6m', xpts: '7.1', score: 81, form: '7.2', xg: '0.44', own: '41.3%', ppg: '5.8', pts: '142',
+        fixtures: [fx(2, 'WOL', false, 24), fx(1, 'IPS', true, 25), fx(3, 'BRI', false, 26)],
+        why: 'Two attacking returns in a row and the softest three-game run of any premium midfielder.' },
+      { rank: '3', name: 'Palmer', full: 'Cole Palmer', team: 'Chelsea', short: 'CHE', pos: 'MID', price: '£11.1m', xpts: '6.8', score: 76, form: '6.6', xg: '0.52', own: '38.7%', ppg: '6.0', pts: '151',
+        fixtures: [fx(3, 'EVE', true, 24), fx(2, 'CRY', true, 25), fx(4, 'LIV', false, 26)],
+        why: 'Penalties plus set pieces keep the floor high even when the underlying numbers dip.' },
+      { rank: '4', name: 'Salah', full: 'Mohamed Salah', team: 'Liverpool', short: 'LIV', pos: 'MID', price: '£14.8m', xpts: '6.5', score: 74, form: '6.1', xg: '0.58', own: '52.1%', ppg: '6.9', pts: '167',
+        fixtures: [fx(4, 'NEW', false, 24), fx(2, 'WHU', true, 25), fx(2, 'CHE', true, 26)],
+        why: 'Away at Newcastle blunts the ceiling — the safer captain from GW25 onward.' },
+      { rank: '5', name: 'Isak', full: 'Alexander Isak', team: 'Newcastle', short: 'NEW', pos: 'FWD', price: '£9.4m', xpts: '6.2', score: 66, form: '6.9', xg: '0.63', own: '29.8%', ppg: '5.4', pts: '128',
+        fixtures: [fx(4, 'LIV', true, 24), fx(3, 'FUL', false, 25), fx(2, 'IPS', true, 26)],
+        why: 'Form pick with a differential edge, but a tough opener against the league leaders.' },
+    ];
+
+    const risers = [
+      { name: 'Mbeumo', team: 'BRE', price: '£7.1m', net: '+142,380', conf: 92 },
+      { name: 'Gordon', team: 'NEW', price: '£7.6m', net: '+98,104', conf: 78 },
+      { name: 'Rogers', team: 'AVL', price: '£5.6m', net: '+71,652', conf: 64 },
+      { name: 'Wood', team: 'NFO', price: '£7.3m', net: '+55,410', conf: 51 },
+      { name: 'Kluivert', team: 'BOU', price: '£5.9m', net: '+40,228', conf: 38 },
+    ];
+    const fallers = [
+      { name: 'Rashford', team: 'MUN', price: '£6.8m', net: '-121,904', conf: 88 },
+      { name: 'Havertz', team: 'ARS', price: '£8.0m', net: '-87,340', conf: 71 },
+      { name: 'Solanke', team: 'TOT', price: '£7.5m', net: '-64,118', conf: 57 },
+      { name: 'Foden', team: 'MCI', price: '£9.1m', net: '-52,006', conf: 44 },
+      { name: 'Nkunku', team: 'CHE', price: '£6.4m', net: '-38,772', conf: 31 },
+    ];
+
+    const gwPoints = [54,61,38,72,49,66,45,58,81,42,55,63,47,70,52,59,44,68,75,51,60,39,64,68];
+    const maxGw = Math.max.apply(null, gwPoints);
+    const bars = gwPoints.map((p, i) => ({
+      gw: 'GW' + (i + 1), pts: p, h: Math.round((p / maxGw) * 100) + '%',
+      color: p >= 65 ? '#1B873B' : p < 45 ? '#CF222E' : '#4C72B0',
+      label: i % 4 === 0 ? String(i + 1) : '',
+    }));
+
+    const rawPlayers = [
+      ['FWD','Haaland','MCI','14.2','8.4','178','7.1','16.42','2.10','312.4','85.2','a',[2,3,2,1,4]],
+      ['MID','Salah','LIV','14.8','6.1','167','6.9','11.08','7.44','341.8','52.1','a',[4,2,2,3,2]],
+      ['MID','Palmer','CHE','11.1','6.6','151','6.0','9.87','6.12','298.6','38.7','a',[3,2,4,2,1]],
+      ['MID','Saka','ARS','10.6','7.2','142','5.8','7.94','8.03','287.2','41.3','a',[2,1,3,2,3]],
+      ['FWD','Isak','NEW','9.4','6.9','128','5.4','12.61','2.88','214.5','29.8','a',[4,3,2,4,2]],
+      ['MID','Mbeumo','BRE','7.1','6.8','119','4.9','8.22','4.31','226.9','18.4','a',[2,1,3,2,2]],
+      ['DEF','Gabriel','ARS','6.4','5.8','106','4.4','2.71','0.94','142.3','24.6','a',[2,1,3,2,3]],
+      ['DEF','Kerkez','LIV','5.6','5.2','98','4.1','1.12','3.07','138.7','16.9','a',[4,2,2,3,2]],
+      ['MID','Rogers','AVL','5.6','6.4','95','4.0','4.38','5.16','188.4','12.1','a',[3,3,2,4,3]],
+      ['FWD','Wood','NFO','7.3','5.1','92','3.8','11.94','1.22','171.6','21.7','d',[3,4,2,3,5]],
+      ['GKP','Raya','ARS','5.6','4.9','89','3.7','0.00','0.11','96.4','19.3','a',[2,1,3,2,3]],
+      ['FWD','Rashford','MUN','6.8','2.1','61','2.5','5.03','2.94','142.8','8.2','i',[5,4,4,3,2]],
+    ];
+    const statusMap = { a: { c: '#1B873B', t: 'Available' }, d: { c: '#BF8700', t: 'Doubtful — 75%' }, i: { c: '#CF222E', t: 'Injured' } };
+    const players = rawPlayers.map((p, i) => ({
+      pos: p[0], name: p[1], team: p[2], price: '£' + p[3] + 'm', form: p[4], pts: p[5], ppg: p[6],
+      xg: p[7], xa: p[8], ict: p[9], sel: p[10] + '%',
+      formColor: parseFloat(p[4]) >= 6 ? '#1B873B' : parseFloat(p[4]) < 3 ? '#CF222E' : '#1A1D23',
+      dot: statusMap[p[11]].c, status: statusMap[p[11]].t,
+      bg: i % 2 === 1 ? '#FAFBFC' : '#FFFFFF',
+      posBg: p[0] === 'GKP' ? '#FFF4CC' : p[0] === 'DEF' ? '#E7F5FF' : p[0] === 'MID' ? '#EFF8F1' : '#FFF0EE',
+      posFg: p[0] === 'GKP' ? '#BF8700' : p[0] === 'DEF' ? '#1971C2' : p[0] === 'MID' ? '#1B873B' : '#CF222E',
+      next: p[12].map((d, j) => fx(d, TEAMS[(i * 3 + j * 5 + 2) % 20], j % 2 === 0, 24 + j)),
+      open: i === 0,
+    }));
+
+    const ict = [
+      { label: 'Influence', val: '1042.6', pct: 88, color: '#4C72B0' },
+      { label: 'Creativity', val: '486.2', pct: 41, color: '#DD8452' },
+      { label: 'Threat', val: '1594.0', pct: 96, color: '#8172B3' },
+    ];
+    const ownTrend = [78,79,81,80,82,83,83,84,85,85,85,85.2].map((v, i) => ({ x: i * 26, y: 42 - (v - 76) * 3.6, v: v }));
+    const ownPath = 'M' + ownTrend.map((p) => p.x.toFixed(1) + ' ' + p.y.toFixed(1)).join(' L ');
+
+    const squad = [
+      { row: 'GKP', players: [{ n: 'Raya', t: 'ARS', pts: '6', ring: '#E8A317', tag: '' }] },
+      { row: 'DEF', players: [
+        { n: 'Gabriel', t: 'ARS', pts: '8', ring: '#2196F3', tag: '' },
+        { n: 'Saliba', t: 'ARS', pts: '2', ring: '#2196F3', tag: '' },
+        { n: 'Kerkez', t: 'LIV', pts: '9', ring: '#2196F3', tag: '' },
+      ] },
+      { row: 'MID', players: [
+        { n: 'Saka', t: 'ARS', pts: '13', ring: '#28A745', tag: '' },
+        { n: 'Palmer', t: 'CHE', pts: '7', ring: '#28A745', tag: '' },
+        { n: 'Mbeumo', t: 'BRE', pts: '11', ring: '#28A745', tag: '' },
+        { n: 'Rogers', t: 'AVL', pts: '2', ring: '#28A745', tag: '' },
+      ] },
+      { row: 'FWD', players: [
+        { n: 'Haaland', t: 'MCI', pts: '24', ring: '#DC3545', tag: 'C' },
+        { n: 'Isak', t: 'NEW', pts: '6', ring: '#DC3545', tag: 'V' },
+        { n: 'Wood', t: 'NFO', pts: '3', ring: '#DC3545', tag: '!' },
+      ] },
+    ];
+    const bench = [
+      { n: 'Sels', t: 'NFO', pts: '2', ring: '#E8A317' },
+      { n: 'Muñoz', t: 'CRY', pts: '0', ring: '#2196F3' },
+      { n: 'Anderson', t: 'NFO', pts: '5', ring: '#28A745' },
+      { n: 'Kluivert', t: 'BOU', pts: '1', ring: '#DC3545' },
+    ];
+
+    const weaknesses = [
+      { sev: 'High', bg: '#FFF0EE', fg: '#CF222E', title: 'Rashford is a dead weight', body: 'Form 2.1, no return in 7, and a knock rated 50%. He has cost you an estimated 14 points since GW18.' },
+      { sev: 'High', bg: '#FFF0EE', fg: '#CF222E', title: 'Triple Arsenal defence, hard GW26', body: 'Gabriel, Saliba and Raya all face Brighton away. One clean sheet risk covers 3 of your 11 starters.' },
+      { sev: 'Watch', bg: '#FFFBEB', fg: '#BF8700', title: 'Muñoz suspended for GW24', body: '5th yellow. Your bench covers it, but Anderson is the only fit outfield replacement.' },
+    ];
+
+    const transferCards = [
+      { out: { n: 'Rashford', t: 'MUN', pos: 'FWD', price: '£6.8m', form: '2.1', ppg: '2.5', fixtures: [fx(5,'LIV',false,24), fx(4,'ARS',true,25), fx(4,'CHE',false,26)], reason: 'No attacking return in 7. Knock rated 50%.' },
+        ins: [
+          { n: 'Mbeumo', t: 'BRE', price: '£7.1m', form: '6.8', ppg: '4.9', xpts: '+4.2', value: 86, cap: 62, tags: ['On penalties','Nailed 90s','Soft run'], top: true, fixtures: [fx(2,'WOL',true,24), fx(1,'IPS',false,25), fx(3,'BRI',true,26)] },
+          { n: 'Kluivert', t: 'BOU', price: '£5.9m', form: '5.6', ppg: '4.2', xpts: '+2.8', value: 74, cap: 48, tags: ['Set pieces','Differential'], top: false, fixtures: [fx(2,'SOU',true,24), fx(3,'EVE',false,25), fx(2,'IPS',true,26)] },
+        ], net: '+£0.3m', gain: '+4.2' },
+      { out: { n: 'Wood', t: 'NFO', pos: 'FWD', price: '£7.3m', form: '5.1', ppg: '3.8', fixtures: [fx(3,'CRY',true,24), fx(4,'MCI',false,25), fx(5,'ARS',true,26)], reason: 'Fixture run turns in GW25. Rotation risk rising.' },
+        ins: [
+          { n: 'Isak', t: 'NEW', price: '£9.4m', form: '6.9', ppg: '5.4', xpts: '+3.6', value: 81, cap: 79, tags: ['Highest xG/90','Captain option'], top: true, fixtures: [fx(4,'LIV',true,24), fx(3,'FUL',false,25), fx(2,'IPS',true,26)] },
+          { n: 'Gordon', t: 'NEW', price: '£7.6m', form: '6.2', ppg: '4.7', xpts: '+2.1', value: 69, cap: 55, tags: ['Rising price','Corners'], top: false, fixtures: [fx(4,'LIV',true,24), fx(3,'FUL',false,25), fx(2,'IPS',true,26)] },
+        ], net: '-£2.1m', gain: '+3.6' },
+    ];
+
+    const differentials = [
+      { n: 'Rogers', t: 'AVL', pos: 'MID', price: '£5.6m', own: '12.1%', xpts: '5.4', form: '6.4', why: 'Nailed in a free role, 5 returns in 8, and Villa have the 3rd easiest run to GW29.' },
+      { n: 'Anderson', t: 'NFO', pos: 'MID', price: '£5.2m', own: '8.4%', xpts: '4.6', form: '5.9', why: 'Every minute played since GW14. Bonus magnet with 41 BPS in the last four.' },
+      { n: 'Kluivert', t: 'BOU', pos: 'FWD', price: '£5.9m', own: '6.7%', xpts: '4.4', form: '5.6', why: 'On penalties and free kicks. Two home games in the next three.' },
+      { n: 'Sarr', t: 'CRY', pos: 'MID', price: '£6.3m', own: '9.2%', xpts: '4.2', form: '5.4', why: 'Highest non-penalty xG among sub-£7m midfielders over the last six.' },
+      { n: 'Wissa', t: 'BRE', pos: 'FWD', price: '£6.6m', own: '5.1%', xpts: '4.0', form: '5.1', why: 'Benefits from the same Brentford run as Mbeumo at £0.5m less.' },
+      { n: 'Muñoz', t: 'CRY', pos: 'DEF', price: '£5.4m', own: '7.8%', xpts: '3.8', form: '4.8', why: 'Attacking full-back with 3 assists in 5 — suspended for GW24 only.' },
+    ];
+
+    const chips = [
+      { name: 'Wildcard', code: 'WC', gw: 'GW31', color: '#1971C2', bg: '#E7F5FF', why: 'Rebuild ahead of the GW32–34 double run. Four of your starters have red fixtures then.', used: false },
+      { name: 'Bench Boost', code: 'BB', gw: 'GW28', color: '#1B873B', bg: '#EFF8F1', why: 'Double gameweek. 13 of 15 players have two fixtures, 9 of them at home.', used: false },
+      { name: 'Triple Captain', code: 'TC', gw: 'GW34', color: '#BF8700', bg: '#FFF4CC', why: 'Haaland double against BOU and SOU — the softest premium double left this season.', used: false },
+      { name: 'Free Hit', code: 'FH', gw: 'GW37', color: '#5F6672', bg: '#EBEDF0', why: 'Blank gameweek: only 6 fixtures. Navigate it rather than burning transfers.', used: false },
+    ];
+    const timeline = [24,25,26,27,28,29,30,31,32,33,34,35,36,37,38].map((g) => {
+      const marker = g === 28 ? { code: 'BB', color: '#1B873B' } : g === 31 ? { code: 'WC', color: '#1971C2' } : g === 34 ? { code: 'TC', color: '#BF8700' } : g === 37 ? { code: 'FH', color: '#5F6672' } : null;
+      const kind = g === 28 || g === 34 ? 'Double' : g === 37 ? 'Blank' : '';
+      return { gw: 'GW' + g, num: String(g), marker: marker, hasMarker: !!marker, kind: kind,
+        bg: g === 28 || g === 34 ? '#E7F5FF' : g === 37 ? '#FFFBEB' : '#FFFFFF',
+        border: marker ? marker.color : '#E0E3E8' };
+    });
+
+    const builderPicks = [
+      { n: 'Haaland', t: 'MCI', pos: 'FWD', price: '£14.2m', xpts: '41.2', nail: 96, goal: 88, fixture: 78, why: 'Penalties, 1.42 xG/90, and 96% of available minutes started.' },
+      { n: 'Saka', t: 'ARS', pos: 'MID', price: '£10.6m', xpts: '34.8', nail: 91, goal: 72, fixture: 86, why: 'Softest three-game run of any premium mid. Corners and pens backup.' },
+      { n: 'Mbeumo', t: 'BRE', pos: 'MID', price: '£7.1m', xpts: '29.4', nail: 94, goal: 66, fixture: 81, why: 'On penalties, every minute played since GW9, £3.5m cheaper than Salah.' },
+      { n: 'Kerkez', t: 'LIV', pos: 'DEF', price: '£5.6m', xpts: '24.1', nail: 88, goal: 34, fixture: 74, why: 'Attacking full-back on the best defence. Two clean sheets in three.' },
+      { n: 'Raya', t: 'ARS', pos: 'GKP', price: '£5.6m', xpts: '21.6', nail: 99, goal: 12, fixture: 86, why: 'Save points floor plus the joint-best clean sheet odds to GW29.' },
+    ];
+
+    const DFDR = { 1:{bg:'#14532D',fg:'#86EFAC'}, 2:{bg:'#166534',fg:'#BBF7D0'}, 3:{bg:'#713F12',fg:'#FDE68A'}, 4:{bg:'#7F1D1D',fg:'#FCA5A5'}, 5:{bg:'#991B1B',fg:'#FECACA'} };
+    const dark = (f) => ({ d: f.d, opp: f.opp, ha: f.ha, label: f.label, bg: DFDR[f.d].bg, fg: DFDR[f.d].fg });
+    const tickerDark = ticker.slice(0, 8).map((r) => ({ team: r.team, avg: r.avg, cells: r.cells.map(dark) }));
+    const capDarkFixtures = captains[0].fixtures.map(dark);
+    const capRestDark = captains.slice(1, 4).map((c) => ({ name: c.name, short: c.short, price: c.price, xpts: c.xpts, score: c.score, fixtures: c.fixtures.map(dark) }));
+
+    const RING = { GKP: '#E8A317', DEF: '#2196F3', MID: '#28A745', FWD: '#DC3545' };
+    const pfRows = [
+      ['GKP', [['Raya','ARS','5.6','21.6',1], ['Sels','NFO','4.4','15.8',0]]],
+      ['DEF', [['Gabriel','ARS','6.4','24.8',1], ['Kerkez','LIV','5.6','24.1',0], ['Muñoz','CRY','5.4','21.4',0], ['Konsa','AVL','4.6','17.2',0], ['Andersen','FUL','4.0','14.6',0]]],
+      ['MID', [['Saka','ARS','10.6','34.8',1], ['Mbeumo','BRE','7.1','29.4',0], ['Sarr','CRY','6.3','21.8',0], ['Rogers','AVL','5.5','23.2',0], ['Anderson','NFO','4.9','19.4',0]]],
+      ['FWD', [['Haaland','MCI','14.2','41.2',1], ['Isak','NEW','9.4','30.6',0], ['Kluivert','BOU','5.9','20.8',0]]],
+    ];
+    const pfSlot = (r, p, filled) => ({
+      n: p[0], t: p[1], price: '£' + p[2] + 'm', xpts: p[3], pos: r,
+      locked: !!p[4], ring: RING[r],
+      empty: !filled && !p[4],
+      isAuto: filled && !p[4],
+      slotBg: p[4] ? '#FFFFFF' : filled ? '#FFFFFF' : 'rgba(255,255,255,.14)',
+      slotBorder: p[4] ? '3px solid ' + RING[r] : filled ? '3px dashed ' + RING[r] : '2px dashed rgba(255,255,255,.55)',
+    });
+    const pickPitchLock = pfRows.map((r) => ({ row: r[0], slots: r[1].map((p) => pfSlot(r[0], p, false)) }));
+    const pickPitchFilled = pfRows.map((r) => ({ row: r[0], slots: r[1].map((p) => pfSlot(r[0], p, true)) }));
+
+    const pickFilled = [];
+    pfRows.forEach((r) => r[1].forEach((p) => {
+      if (!p[4]) pickFilled.push({ n: p[0], t: p[1], pos: r[0], price: '£' + p[2] + 'm', xpts: p[3] });
+    }));
+
+    const lockedChips = [
+      { n: 'Haaland', pos: 'FWD', t: 'MCI', price: '£14.2m', ring: '#DC3545' },
+      { n: 'Saka', pos: 'MID', t: 'ARS', price: '£10.6m', ring: '#28A745' },
+      { n: 'Gabriel', pos: 'DEF', t: 'ARS', price: '£6.4m', ring: '#2196F3' },
+      { n: 'Raya', pos: 'GKP', t: 'ARS', price: '£5.6m', ring: '#E8A317' },
+    ];
+
+    const searchRows = [
+      { n: 'Saka', pos: 'MID', t: 'ARS', price: '£10.6m', sel: '41.3%', state: 'locked', note: 'Locked', bg: '#EFF8F1', fg: '#1B873B' },
+      { n: 'Salah', pos: 'MID', t: 'LIV', price: '£14.8m', sel: '52.1%', state: 'ok', note: '', bg: '#FFFFFF', fg: '#1A1D23' },
+      { n: 'Saliba', pos: 'DEF', t: 'ARS', price: '£6.2m', sel: '18.4%', state: 'blocked', note: '3 Arsenal players already', bg: '#FFFBEB', fg: '#BF8700' },
+      { n: 'Sarr', pos: 'MID', t: 'CRY', price: '£6.3m', sel: '9.2%', state: 'ok', note: '', bg: '#FFFFFF', fg: '#1A1D23' },
+      { n: 'Sánchez', pos: 'GKP', t: 'CHE', price: '£4.8m', sel: '11.6%', state: 'ok', note: '', bg: '#FFFFFF', fg: '#1A1D23' },
+      { n: 'Savinho', pos: 'MID', t: 'MCI', price: '£6.7m', sel: '7.4%', state: 'ok', note: '', bg: '#FFFFFF', fg: '#1A1D23' },
+    ];
+
+    const posCounts = [
+      { pos: 'GKP', have: '1', need: '2', pct: 50, done: false },
+      { pos: 'DEF', have: '1', need: '5', pct: 20, done: false },
+      { pos: 'MID', have: '1', need: '5', pct: 20, done: false },
+      { pos: 'FWD', have: '1', need: '3', pct: 33, done: false },
+    ];
+    const teamCaps = [
+      { t: 'ARS', have: '3', cap: '3', bg: '#FFFBEB', fg: '#BF8700', note: 'At limit' },
+      { t: 'MCI', have: '1', cap: '3', bg: '#F4F5F7', fg: '#5F6672', note: '' },
+    ];
+
+    const b = this.state.builder;
+    const st = this.state.step;
+
+    return {
+      isAuto: b === 'auto', isPick: b === 'pick',
+      modeAuto: { bg: b === 'auto' ? '#FFFFFF' : 'transparent', fg: b === 'auto' ? '#1A1D23' : '#5F6672', sh: b === 'auto' ? '0 1px 2px rgba(0,0,0,.08)' : 'none' },
+      modePick: { bg: b === 'pick' ? '#FFFFFF' : 'transparent', fg: b === 'pick' ? '#1A1D23' : '#5F6672', sh: b === 'pick' ? '0 1px 2px rgba(0,0,0,.08)' : 'none' },
+      setAuto: () => this.setState({ builder: 'auto' }),
+      setPick: () => this.setState({ builder: 'pick' }),
+      step1: () => this.setState({ builder: 'pick', step: 1 }),
+      step2: () => this.setState({ builder: 'pick', step: 2 }),
+      step3: () => this.setState({ builder: 'pick', step: 3 }),
+      isStep1: st === 1, isStep2: st === 2, isStep3: st === 3,
+      isStep12: st === 1 || st === 2,
+      s1: { bg: st === 1 ? '#1A1D23' : '#FFFFFF', fg: st === 1 ? '#FFFFFF' : '#5F6672', bd: st === 1 ? '#1A1D23' : '#E0E3E8' },
+      s2: { bg: st === 2 ? '#1A1D23' : '#FFFFFF', fg: st === 2 ? '#FFFFFF' : '#5F6672', bd: st === 2 ? '#1A1D23' : '#E0E3E8' },
+      s3: { bg: st === 3 ? '#1A1D23' : '#FFFFFF', fg: st === 3 ? '#FFFFFF' : '#5F6672', bd: st === 3 ? '#1A1D23' : '#E0E3E8' },
+      pickPitch: st === 3 ? pickPitchFilled : pickPitchLock,
+      isStates: s === 'states', goStates: go('states'), navStates: this.nav('states'),
+      skelCards: [0, 1, 2, 3],
+      skelRows: [72, 58, 66, 50, 62, 44, 68, 54].map((w, i) => ({ w: w + '%', delay: (i * 0.08).toFixed(2) + 's' })),
+      skelTicker: [1, 2, 3, 4, 5, 6],
+      pickFilled: pickFilled, lockedChips: lockedChips, searchRows: searchRows, posCounts: posCounts, teamCaps: teamCaps,
+      tickerDark: tickerDark, capDarkFixtures: capDarkFixtures, capRestDark: capRestDark,
+      players: players, ict: ict, ownPath: ownPath,
+      squad: squad, bench: bench, weaknesses: weaknesses,
+      transferCards: transferCards, differentials: differentials,
+      chips: chips, timeline: timeline, builderPicks: builderPicks,
+      isDash: s === 'dashboard', isPlayers: s === 'players', isTeam: s === 'team',
+      isTransfers: s === 'transfers', isCaptain: s === 'captain', isSquad: s === 'squad',
+      isDark: s === 'dark', isMobile: s === 'mobile', isNotes: s === 'notes',
+      goDash: go('dashboard'), goPlayers: go('players'), goTeam: go('team'),
+      goTransfers: go('transfers'), goCaptain: go('captain'), goSquad: go('squad'),
+      goDark: go('dark'), goMobile: go('mobile'), goNotes: go('notes'),
+      navDash: this.nav('dashboard'), navPlayers: this.nav('players'), navTeam: this.nav('team'),
+      navTransfers: this.nav('transfers'), navCaptain: this.nav('captain'), navSquad: this.nav('squad'),
+      navDark: this.nav('dark'), navMobile: this.nav('mobile'), navNotes: this.nav('notes'),
+      ticker: ticker, captains: captains, cap1: captains[0], capRest: captains.slice(1),
+      risers: risers, fallers: fallers, bars: bars,
+      gwHeader: ['GW24','GW25','GW26','GW27','GW28','GW29'],
+    };
+  }
+}
+
+</script>
+</body>
+</html>
